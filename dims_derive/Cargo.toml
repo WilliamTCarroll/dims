@@ -1,0 +1,15 @@
+[package]
+name = "dims_derive"
+version = "0.1.0"
+authors = ["william"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+proc-macro = true
+
+[dependencies]
+dims_core = {path = "../dims_core"}
+syn = "1.0"
+quote = "1.0"

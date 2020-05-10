@@ -1,0 +1,7 @@
+[workspace]
+
+members = [
+    "dims_core",
+    "dims_derive",
+    "dims",
+]
