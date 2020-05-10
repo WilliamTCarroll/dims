@@ -2,7 +2,7 @@ use crate::systems::Length;
 use dims_core::*;
 use std::marker::PhantomData;
 
-pub const MILLIMETRE: Unit<Length> = Unit::<Length> {
+pub const MILLIMETRE: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
-    conv_enum: UnitConvert::Direct(1000.0),
+    in_base: 1000.0,
 };

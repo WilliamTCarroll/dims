@@ -1,6 +1,6 @@
 use crate::Flt;
 
-use super::{MeasureSystem, Unit};
+use super::{MeasureSystem as MS, UnitTrait};
 use std::fmt;
 
 use std::marker::PhantomData;
@@ -8,11 +8,11 @@ use std::ops::{Add, Sub};
 
 #[repr(transparent)]
 #[derive(Copy, Clone, PartialEq)]
-pub struct Measure<S: MeasureSystem> {
+pub struct Measure<S: MS> {
     system: PhantomData<S>,
     val: Flt,
 }
-impl<S: MeasureSystem> fmt::Debug for Measure<S> {
+impl<S: MS> fmt::Debug for Measure<S> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("Measure")
             .field("as_base", &self.val)
@@ -20,9 +20,9 @@ impl<S: MeasureSystem> fmt::Debug for Measure<S> {
     }
 }
 
-impl<S: MeasureSystem> Measure<S> {
+impl<S: MS> Measure<S> {
     /// Generate a new Measure from the given unit and val
-    pub fn new(unit: &Unit<S>, val: Flt) -> Self {
+    pub fn new<U: UnitTrait<S>>(unit: &U, val: Flt) -> Self {
         let val = unit.to_base(val);
         Self {
             system: PhantomData,
@@ -30,12 +30,12 @@ impl<S: MeasureSystem> Measure<S> {
         }
     }
     /// Convert the stored unit to the provided one
-    pub fn val_as(&self, unit: &Unit<S>) -> Flt {
+    pub fn val_as<U: UnitTrait<S>>(&self, unit: &U) -> Flt {
         unit.to_self(self.val)
     }
 }
 
-impl<S: MeasureSystem> Add for Measure<S> {
+impl<S: MS> Add for Measure<S> {
     type Output = Self;
     fn add(self, other: Self) -> Self {
         Self {
@@ -45,7 +45,7 @@ impl<S: MeasureSystem> Add for Measure<S> {
     }
 }
 
-impl<S: MeasureSystem> Add for &Measure<S> {
+impl<S: MS> Add for &Measure<S> {
     type Output = Measure<S>;
     fn add(self, other: Self) -> Measure<S> {
         Measure::<S> {
@@ -55,7 +55,7 @@ impl<S: MeasureSystem> Add for &Measure<S> {
     }
 }
 
-impl<S: MeasureSystem> Sub for Measure<S> {
+impl<S: MS> Sub for Measure<S> {
     type Output = Self;
     fn sub(self, other: Self) -> Self {
         Self {
@@ -65,7 +65,7 @@ impl<S: MeasureSystem> Sub for Measure<S> {
     }
 }
 
-impl<S: MeasureSystem> Sub for &Measure<S> {
+impl<S: MS> Sub for &Measure<S> {
     type Output = Measure<S>;
     fn sub(self, other: Self) -> Measure<S> {
         Measure::<S> {
@@ -79,7 +79,7 @@ impl<S: MeasureSystem> Sub for &Measure<S> {
 mod test {
     use super::*;
     struct Length {}
-    impl MeasureSystem for Length {}
+    impl MS for Length {}
     #[cfg(feature = "f64")]
     const SIZE: usize = 8;
     #[cfg(not(feature = "f64"))]

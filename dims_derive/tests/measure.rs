@@ -1,18 +1,18 @@
 #[macro_use]
 extern crate dims_derive;
-use dims_core::{Unit, UnitConvert};
+use dims_core::*;
 use std::marker::PhantomData;
 
 #[derive(MeasureSystem)]
 struct Length;
 
-const INCH: Unit<Length> = Unit::<Length> {
+const INCH: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
-    conv_enum: UnitConvert::Direct(1.0 / 0.0254),
+    in_base: 1.0 / 0.0254,
 };
-const MM: Unit<Length> = Unit::<Length> {
+const MM: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
-    conv_enum: UnitConvert::Direct(1000.0),
+    in_base: 1000.0,
 };
 #[test]
 fn test_measure_impl() {

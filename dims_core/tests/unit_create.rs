@@ -8,28 +8,27 @@ impl MeasureSystem for Length {}
 struct Mass {}
 impl MeasureSystem for Mass {}
 
-const INCH: Unit<Length> = Unit::<Length> {
+static INCH: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
-    conv_enum: UnitConvert::Direct(1.0 / 0.0254),
+    in_base: 1.0 / 0.0254,
 };
-const MM: Unit<Length> = Unit::<Length> {
+static MM: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
-    conv_enum: UnitConvert::Direct(1000.0),
+    in_base: 1000.0,
 };
 
-const GRAM: Unit<Mass> = Unit::<Mass> {
+static GRAM: UnitSimple<Mass> = UnitSimple::<Mass> {
     system: PhantomData,
-    conv_enum: UnitConvert::Direct(1.0),
+    in_base: 1.0,
 };
-const KILOGRAM: Unit<Mass> = Unit::<Mass> {
+static KILOGRAM: UnitSimple<Mass> = UnitSimple::<Mass> {
     system: PhantomData,
-    conv_enum: UnitConvert::Direct(1000.0),
+    in_base: 1000.0,
 };
 
 #[test]
 fn test_create() {
     let inch = INCH.from(12.0);
-    println!("{:?}", inch);
     let gram = GRAM.from(25.0);
     let mm = inch.val_as(&MM);
     // Rounding fun to ensure 64 and 32 bit tests okay
