@@ -1,6 +1,6 @@
 use dims_core::*;
+use rand;
 use std::marker::PhantomData;
-
 #[derive(PartialEq)]
 struct Length {}
 impl MeasureSystem for Length {}
@@ -44,28 +44,43 @@ fn test_create() {
     assert_eq!(no, INCH.from(0.0));
 
     // inch.val_as(&GRAM); // Should not work
-    let mut i = 0.0;
+
+    // Grab the pair of random numbers to add
+    // These ensure:
+    // - Same values are tested direct and wrapped
+    // - Compiler cannot aggressively optimize static values
+    let list = get_rand_list(10000);
     let time_direct = std::time::Instant::now();
     // loop and add
-    while i < 10000000.0 {
-        let input = 2.0;
-        let _output = input + i;
-        i += 1.0;
+    for (num1, num2) in &list {
+        let _output = num1 + num2;
     }
     println!("DIRECT: {:?}", time_direct.elapsed().as_nanos());
     // Reset and begin
-    i = 0.0;
     let time_wrapped = std::time::Instant::now();
-    while i < 10000000.0 {
-        let input = MM.from(2.0);
-        let _output = input + MM.from(i);
-        i += 1.0;
+    for (num1, num2) in &list {
+        let num1 = MM.from(*num1);
+        let num2 = MM.from(*num2);
+        let _output = num1 + num2;
     }
     println!("WRAPPED:{:?}", time_wrapped.elapsed().as_nanos());
     // panic to print output
-    panic!()
+    // panic!()
     // A word on results:
     // Wrapped time on *Debug* is generally twice as slow as direct
     // Wrapped time on *Release* is fairly exact (sometimes slower, sometimes faster)
     // From what I can tell, there is little to no runtime loss when under release optimizations
+}
+/// Get a list of the specified length
+///
+/// This should help counter aggressive optimization of the compiler
+fn get_rand_list(len: usize) -> Vec<(Flt, Flt)> {
+    let mut out = Vec::with_capacity(len);
+
+    for _ in 1..len {
+        let num1 = rand::random::<Flt>() * 100.0;
+        let num2 = rand::random::<Flt>() * 100.0;
+        out.push((num1, num2));
+    }
+    out
 }
