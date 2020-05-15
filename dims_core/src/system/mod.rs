@@ -9,6 +9,22 @@ pub use unit_simple::UnitSimple;
 /// This is currently entirely blank; it is just used as PhantomData
 pub trait MeasureSystem {}
 
+/// Allows this MeasureSystem to transform into another via multiplication
+///
+/// - Output specifies what system will be the result (EX: Area as output for Length * Length)
+/// - Other specifies what will be multiplied by this value to get the Output( EX: Length for Length)
+pub trait MultiplyTo {
+    type Output: MeasureSystem;
+    type Other: MeasureSystem;
+}
+/// Allows this MeasureSystem to transform into another via division
+///
+/// - Output specifies what system will be the result (EX: Length as output for Area / Length)
+/// - Other specifies what will be multiplied by this value to get the Output( EX: Length for Area)
+pub trait DivideTo {
+    type Output: MeasureSystem;
+    type Other: MeasureSystem;
+}
 
 /// UnitTrait is used to create a unit for a MeasureSystem
 ///

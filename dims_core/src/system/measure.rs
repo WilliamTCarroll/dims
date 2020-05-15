@@ -1,10 +1,10 @@
 use crate::Flt;
 
-use super::{MeasureSystem as MS, UnitTrait as UT};
+use super::{DivideTo, MeasureSystem as MS, MultiplyTo, UnitTrait as UT};
 use std::fmt;
 
 use std::marker::PhantomData;
-use std::ops::{Add, Sub};
+use std::ops::{Add, Div, Mul, Sub};
 
 /// Measure is a wrapped Measurement of a specific System.
 ///
@@ -31,6 +31,10 @@ impl<S: MS> Measure<S> {
     /// Convert the stored value to the provided one
     pub fn val_as<U: UT<S>>(&self, unit: &U) -> Flt {
         unit.to_self(self.val)
+    }
+    /// Return the stored value in its base unit
+    pub fn as_base(&self) -> Flt {
+        self.val
     }
 }
 
@@ -80,6 +84,26 @@ impl<S: MS> Sub for &Measure<S> {
         Measure::<S> {
             system: PhantomData,
             val: self.val - other.val,
+        }
+    }
+}
+
+// Section: Conditonal Impls
+impl<S: MS + MultiplyTo> Mul<Measure<S::Other>> for Measure<S> {
+    type Output = Measure<S::Output>;
+    fn mul(self, other: Measure<S::Other>) -> Measure<S::Output> {
+        Self::Output {
+            system: PhantomData,
+            val: self.val * other.val,
+        }
+    }
+}
+impl<S: MS + DivideTo> Div<Measure<S::Other>> for Measure<S> {
+    type Output = Measure<S::Output>;
+    fn div(self, other: Measure<S::Other>) -> Self::Output {
+        Self::Output {
+            system: PhantomData,
+            val: self.val / other.val,
         }
     }
 }
