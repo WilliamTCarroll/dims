@@ -1,6 +1,6 @@
 mod measure;
 mod unit_simple;
-use crate::{Flt, MeasureSystem as MS};
+use crate::unit_creation::{Flt, MeasureSystem as MS};
 
 pub use measure::Measure;
 pub use unit_simple::UnitSimple;

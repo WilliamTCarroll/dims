@@ -1,11 +1,13 @@
-use dims_core::*;
+use dims_core::prelude::UnitSimple;
+use dims_core::unit_creation::*;
 use rand;
 use std::marker::PhantomData;
 #[derive(PartialEq)]
-struct Length {}
+struct Length;
 impl MeasureSystem for Length {}
 
-struct Mass {}
+#[derive(PartialEq)]
+struct Mass;
 impl MeasureSystem for Mass {}
 
 static INCH: UnitSimple<Length> = UnitSimple::<Length> {

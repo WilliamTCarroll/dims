@@ -1,6 +1,6 @@
 #[macro_use]
 extern crate dims_derive;
-use dims_core::*;
+use dims_core::prelude::*;
 use std::marker::PhantomData;
 
 #[derive(MeasureSystem)]

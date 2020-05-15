@@ -6,18 +6,17 @@ use std::fmt;
 use std::marker::PhantomData;
 use std::ops::{Add, Sub};
 
+/// Measure is a wrapped Measurement of a specific System.
+///
+/// The value is stored in the base unit of the given system. (EX: Metre for length)
+///
+/// This is `#[repr(transparent)]`, so when compiled,
+/// the memory footprint is that of the underlying Float
 #[repr(transparent)]
 #[derive(Copy, Clone, PartialEq)]
 pub struct Measure<S: MS> {
     system: PhantomData<S>,
     val: Flt,
-}
-impl<S: MS> fmt::Debug for Measure<S> {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.debug_struct("Measure")
-            .field("as_base", &self.val)
-            .finish()
-    }
 }
 
 impl<S: MS> Measure<S> {
@@ -32,6 +31,16 @@ impl<S: MS> Measure<S> {
     /// Convert the stored value to the provided one
     pub fn val_as<U: UT<S>>(&self, unit: &U) -> Flt {
         unit.to_self(self.val)
+    }
+}
+
+// Section: External Impls
+
+impl<S: MS> fmt::Debug for Measure<S> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("Measure")
+            .field("as_base", &self.val)
+            .finish()
     }
 }
 
@@ -78,7 +87,7 @@ impl<S: MS> Sub for &Measure<S> {
 #[cfg(test)]
 mod test {
     use super::*;
-    struct Length {}
+    struct Length;
     impl MS for Length {}
     #[cfg(feature = "f64")]
     const SIZE: usize = 8;

@@ -1,12 +1,14 @@
 use super::*;
 use std::marker::PhantomData;
-/// A Unit in a given MeasureSystem
+/// A Simple Unit in a given MeasureSystem
 ///
 /// The equations for Unit are as follows:
 ///
 /// `self.to_base = (val + self.offset) * self.ratio`
 ///
 /// `self.to_self = (val / self.ratio) - self.offset`
+///
+/// If greater flexibility is required, please see `UnitTrait`
 pub struct UnitSimple<S: MS> {
     pub system: PhantomData<S>,
     pub ratio: Flt,
