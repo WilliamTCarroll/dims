@@ -5,15 +5,13 @@ use std::marker::PhantomData;
 #[derive(PartialEq, Copy, Clone)]
 struct Length;
 impl MeasureSystem for Length {}
-impl MultiplyTo for Length {
-    type Other = Length;
+impl MultiplyBy<Length> for Length {
     type Output = Area;
 }
 #[derive(PartialEq)]
 struct Area;
 impl MeasureSystem for Area {}
-impl DivideTo for Area {
-    type Other = Length;
+impl DivideBy<Length> for Area {
     type Output = Length;
 }
 #[derive(PartialEq)]

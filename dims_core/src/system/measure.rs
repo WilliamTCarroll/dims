@@ -1,6 +1,6 @@
 use crate::Flt;
 
-use super::{DivideTo, MeasureSystem as MS, MultiplyTo, UnitTrait as UT};
+use super::{DivideBy, MeasureSystem as MS, MultiplyBy, UnitTrait as UT};
 use std::fmt;
 
 use std::marker::PhantomData;
@@ -89,18 +89,18 @@ impl<S: MS> Sub for &Measure<S> {
 }
 
 // Section: Conditonal Impls
-impl<S: MS + MultiplyTo> Mul<Measure<S::Other>> for Measure<S> {
+impl<OTH: MS, S: MS + MultiplyBy<OTH>> Mul<Measure<OTH>> for Measure<S> {
     type Output = Measure<S::Output>;
-    fn mul(self, other: Measure<S::Other>) -> Measure<S::Output> {
+    fn mul(self, other: Measure<OTH>) -> Measure<S::Output> {
         Self::Output {
             system: PhantomData,
             val: self.val * other.val,
         }
     }
 }
-impl<S: MS + DivideTo> Div<Measure<S::Other>> for Measure<S> {
+impl<OTH: MS, S: MS + DivideBy<OTH>> Div<Measure<OTH>> for Measure<S> {
     type Output = Measure<S::Output>;
-    fn div(self, other: Measure<S::Other>) -> Self::Output {
+    fn div(self, other: Measure<OTH>) -> Self::Output {
         Self::Output {
             system: PhantomData,
             val: self.val / other.val,
