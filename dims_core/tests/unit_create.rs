@@ -94,7 +94,7 @@ fn test_create() {
     println!("{}", list_out1.len());
     println!("{}", list_out2.len());
     // panic to print output
-    panic!()
+    // panic!()
     // A word on results:
     // Wrapped time on *Debug* is generally twice as slow as direct
     // Wrapped time on *Release* is fairly exact (sometimes slower, sometimes faster)

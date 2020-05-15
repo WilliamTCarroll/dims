@@ -1,6 +1,4 @@
-use crate::Flt;
-
-use super::{DivideBy, MeasureSystem as MS, MultiplyBy, UnitTrait as UT};
+use super::{DivideBy, Flt, MeasureSystem as MS, MultiplyBy, UnitTrait as UT};
 use std::fmt;
 
 use std::marker::PhantomData;

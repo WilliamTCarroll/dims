@@ -1,7 +1,6 @@
 mod float;
 mod system;
 
-pub use float::Flt;
 pub mod prelude {
     pub use super::float::{Flt, RoundTo};
     pub use super::system::{Measure, UnitSimple, UnitTrait};
@@ -9,5 +8,6 @@ pub mod prelude {
 
 pub mod unit_creation {
     pub use super::float::{Flt, RoundTo};
-    pub use super::system::{DivideTo, Measure, MeasureSystem, MultiplyTo, UnitTrait};
+    pub use super::system::{DivideBy, Measure, MeasureSystem, MultiplyBy, UnitSimple, UnitTrait};
+    pub use std::marker::PhantomData;
 }
