@@ -21,5 +21,5 @@ fn test_measure_impl() {
     //
     let inch = INCH.from(2.0);
     let mm = MM.from(50.8);
-    assert_eq!(inch, mm);
+    assert_eq!(inch.as_base().round_to(6), mm.as_base().round_to(6));
 }

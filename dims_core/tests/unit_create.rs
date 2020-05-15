@@ -2,10 +2,20 @@ use dims_core::prelude::UnitSimple;
 use dims_core::unit_creation::*;
 use rand;
 use std::marker::PhantomData;
-#[derive(PartialEq)]
+#[derive(PartialEq, Copy, Clone)]
 struct Length;
 impl MeasureSystem for Length {}
-
+impl MultiplyTo for Length {
+    type Other = Length;
+    type Output = Area;
+}
+#[derive(PartialEq)]
+struct Area;
+impl MeasureSystem for Area {}
+impl DivideTo for Area {
+    type Other = Length;
+    type Output = Length;
+}
 #[derive(PartialEq)]
 struct Mass;
 impl MeasureSystem for Mass {}
@@ -19,6 +29,12 @@ static MM: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
     offset: 0.0,
     ratio: 1.0 / 1000.0,
+};
+
+static SQMM: UnitSimple<Area> = UnitSimple::<Area> {
+    system: PhantomData,
+    offset: 0.0,
+    ratio: 1.0 / 1000000.0,
 };
 
 static GRAM: UnitSimple<Mass> = UnitSimple::<Mass> {
@@ -38,9 +54,9 @@ fn test_create() {
     let gram = GRAM.from(25.0);
     let mm = inch.val_as(&MM);
     // Rounding fun to ensure 64 and 32 bit test okay
-    assert_eq!((mm * 1000.0).round(), 304.8 * 1000.0);
+    assert_eq!(mm.round_to(4), 304.8);
     let kg = gram.val_as(&KILOGRAM);
-    assert_eq!((kg * 100.0).round(), 25000.0 * 100.0);
+    assert_eq!(kg.round_to(2), 25000.0);
     // Check addition
     let dbl = &inch + &inch;
     if inch == dbl {}
@@ -85,6 +101,17 @@ fn test_create() {
     // Wrapped time on *Debug* is generally twice as slow as direct
     // Wrapped time on *Release* is fairly exact (sometimes slower, sometimes faster)
     // From what I can tell, there is little to no runtime loss when under release optimizations
+}
+
+#[test]
+fn test_mul_div() {
+    let len1 = MM.from(12.5);
+    let len2 = MM.from(10.0);
+    let area = len1 * len2;
+    println!("{:?}", area);
+    assert_eq!(area.val_as(&SQMM).round_to(4), 125.0.round_to(4));
+    let len3 = area / len2;
+    assert_eq!(len3.val_as(&MM).round_to(4), 12.5.round_to(4));
 }
 /// Get a list of the specified length
 ///
