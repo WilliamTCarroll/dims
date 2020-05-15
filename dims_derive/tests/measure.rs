@@ -8,11 +8,13 @@ struct Length;
 
 const INCH: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
-    in_base: 1.0 / 0.0254,
+    offset: 0.0,
+    ratio: 0.0254,
 };
 const MM: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
-    in_base: 1000.0,
+    offset: 0.0,
+    ratio: 1.0 / 1000.0,
 };
 #[test]
 fn test_measure_impl() {

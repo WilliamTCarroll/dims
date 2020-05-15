@@ -1,6 +1,6 @@
 use crate::Flt;
 
-use super::{MeasureSystem as MS, UnitTrait};
+use super::{MeasureSystem as MS, UnitTrait as UT};
 use std::fmt;
 
 use std::marker::PhantomData;
@@ -22,15 +22,15 @@ impl<S: MS> fmt::Debug for Measure<S> {
 
 impl<S: MS> Measure<S> {
     /// Generate a new Measure from the given unit and val
-    pub fn new<U: UnitTrait<S>>(unit: &U, val: Flt) -> Self {
+    pub fn new<U: UT<S>>(unit: &U, val: Flt) -> Self {
         let val = unit.to_base(val);
         Self {
             system: PhantomData,
             val,
         }
     }
-    /// Convert the stored unit to the provided one
-    pub fn val_as<U: UnitTrait<S>>(&self, unit: &U) -> Flt {
+    /// Convert the stored value to the provided one
+    pub fn val_as<U: UT<S>>(&self, unit: &U) -> Flt {
         unit.to_self(self.val)
     }
 }
