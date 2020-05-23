@@ -1,5 +1,5 @@
 use super::*;
-use std::marker::PhantomData;
+use core::marker::PhantomData;
 /// A Simple Unit in a given MeasureSystem
 ///
 /// The equations for Unit are as follows:

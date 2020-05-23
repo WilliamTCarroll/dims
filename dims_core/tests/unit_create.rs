@@ -2,6 +2,18 @@ use dims_core::prelude::UnitSimple;
 use dims_core::unit_creation::*;
 use rand;
 use std::marker::PhantomData;
+
+/// Specify a function to round a numeric to the specified number of
+pub trait RoundTo {
+    /// Round the given value to the number of decimals specified
+    fn round_to(&self, decimals: i32) -> Self;
+}
+impl RoundTo for Flt {
+    fn round_to(&self, decimals: i32) -> Self {
+        let decimals: Flt = (10.0 as Flt).powi(decimals);
+        (self * decimals).round() / decimals
+    }
+}
 #[derive(PartialEq, Copy, Clone)]
 struct Length;
 impl MeasureSystem for Length {}

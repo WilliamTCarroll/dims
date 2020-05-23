@@ -1,3 +1,5 @@
+#![cfg(not(test))]
+#![no_std]
 mod measure_system;
 use proc_macro::TokenStream;
 

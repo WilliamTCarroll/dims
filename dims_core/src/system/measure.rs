@@ -1,8 +1,8 @@
 use super::{DivideBy, Flt, MeasureSystem as MS, MultiplyBy, UnitTrait as UT};
-use std::fmt;
+use core::fmt;
 
-use std::marker::PhantomData;
-use std::ops::{Add, Div, Mul, Sub};
+use core::marker::PhantomData;
+use core::ops::{Add, Div, Mul, Sub};
 
 /// Measure is a wrapped Measurement of a specific System.
 ///
