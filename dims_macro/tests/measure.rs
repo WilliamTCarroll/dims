@@ -1,5 +1,5 @@
 #[macro_use]
-extern crate dims_derive;
+extern crate dims_macro;
 use dims_core::prelude::*;
 use std::marker::PhantomData;
 

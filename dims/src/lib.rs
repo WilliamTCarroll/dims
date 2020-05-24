@@ -1,7 +1,7 @@
 #![cfg(not(test))]
 #![no_std]
 #[macro_use]
-extern crate dims_derive;
+extern crate dims_macro;
 
 #[cfg(feature = "imp")]
 pub mod imperial;
