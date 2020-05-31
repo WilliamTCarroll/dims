@@ -1,6 +1,7 @@
 #![cfg(not(test))]
 #![no_std]
 pub mod float;
+mod si_macro;
 mod system;
 /// ## prelude
 ///
@@ -26,4 +27,5 @@ pub mod unit_creation {
     pub use super::float::Flt;
     pub use super::system::{DivideBy, Measure, MeasureSystem, MultiplyBy, UnitSimple, UnitTrait};
     pub use core::marker::PhantomData;
+    pub use paste;
 }
