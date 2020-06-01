@@ -34,7 +34,7 @@ impl DivideBy<Length> for Area {
 #[derive(MeasureSystem)]
 /// Volume measures three dimensional length
 ///
-/// The base unit for this is the Cubic Metre / Litre
+/// The base unit for this is the Cubic Metre
 ///
 /// The following operations are supported (as well as addition and subtraction):
 /// - Volume / Length = Area

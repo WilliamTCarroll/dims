@@ -110,13 +110,13 @@ This contains a set of pre-made systems and units.  These will be added to as ti
 
 The currently set-up systems are
 
-| System      | Base Unit |
-|-------------|-----------|
-| Length      | Metre     |
-| Area        | Sq Metre  |
-| Volume      | Litre / Cubic Metre |
-| Mass        | Gram      |
-| Temperature | Kelvin    |
+| System      | Base Unit   |
+|-------------|-------------|
+| Length      | Metre       |
+| Area        | Sq Metre    |
+| Volume      | Cubic Metre |
+| Mass        | Gram        |
+| Temperature | Kelvin      |
 
 # Other Notes
 ## Performance
