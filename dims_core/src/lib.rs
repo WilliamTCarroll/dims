@@ -1,4 +1,3 @@
-#![cfg(not(test))]
 #![no_std]
 pub mod float;
 mod si_macro;

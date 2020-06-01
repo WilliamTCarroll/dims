@@ -1,4 +1,3 @@
-#![cfg(not(test))]
 #![no_std]
 #[macro_use]
 extern crate dims_macro;
@@ -9,4 +8,9 @@ extern crate dims_core;
 pub mod imperial;
 #[cfg(feature = "si")]
 pub mod si;
+
+pub mod prelude {
+    pub use dims_core::prelude::*;
+}
+
 pub mod systems;

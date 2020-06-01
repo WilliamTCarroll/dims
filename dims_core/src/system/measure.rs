@@ -105,29 +105,3 @@ impl<OTH: MS, S: MS + DivideBy<OTH>> Div<Measure<OTH>> for Measure<S> {
         }
     }
 }
-
-#[cfg(test)]
-mod test {
-    use super::*;
-    struct Length;
-    impl MS for Length {}
-    #[cfg(feature = "f64")]
-    const SIZE: usize = 8;
-    #[cfg(not(feature = "f64"))]
-    const SIZE: usize = 4;
-    #[test]
-    fn check_measure_size() {
-        use std::mem::{size_of, size_of_val};
-        let raw = 25.4;
-        let wrap = Measure::<Length> {
-            system: PhantomData,
-            val: raw,
-        };
-
-        // These should all be the same:
-        // The number of bytes equal to the stored value
-        assert_eq!(SIZE, size_of::<Measure<Length>>());
-        assert_eq!(SIZE, size_of_val(&wrap));
-        assert_eq!(SIZE, size_of_val(&raw));
-    }
-}

@@ -62,16 +62,3 @@ pub struct Temperature;
 ///
 /// The base unit of this is Gram.
 pub struct Mass;
-
-#[cfg(test)]
-mod test {
-    use super::*;
-    #[test]
-    fn test_system_size() {
-        use std::mem::size_of_val;
-        // We need to ensure these always have a zero size
-        assert_eq!(0, size_of_val(&Length));
-        assert_eq!(0, size_of_val(&Area));
-        assert_eq!(0, size_of_val(&Volume));
-    }
-}
