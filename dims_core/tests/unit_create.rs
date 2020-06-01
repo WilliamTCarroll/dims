@@ -32,22 +32,20 @@ impl DivideBy<Length> for Area {
 pub struct Mass;
 impl MeasureSystem for Mass {}
 
-si_unit! {METRE, Length}
+si_unit! {"METRE", Length}
 
 static INCH: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
 };
-
-static SQMM: UnitSimple<Area> = UnitSimple::<Area> {
-    system: PhantomData,
-    offset: 0.0,
-    ratio: 1.0 / 1000000.0,
-};
-
-si_unit! {GRAM, Mass}
+use KILOMETRE as KM;
 use MILLIMETRE as MM;
+
+si_unit! {"SQ", "METRE", Area, 1000.0}
+use SQKILOMETRE as SQKM;
+use SQMILLIMETRE as SQMM;
+si_unit! {"GRAM", Mass}
 #[test]
 fn test_create() {
     let inch = INCH.from(12.0);
@@ -62,10 +60,8 @@ fn test_create() {
     if inch == dbl {}
     assert_eq!(dbl, INCH.from(24.0));
     // And subtraction
-    let no = &inch - &inch;
-    assert_eq!(no, INCH.from(0.0));
-    let temp = DECIMETRE.from(123.0);
-    // temp.val_as(&INCH);
+    let zero = &inch - &inch;
+    assert_eq!(zero, INCH.from(0.0));
     // inch.val_as(&GRAM); // Should not work
 
     // Grab the pair of random numbers to add
@@ -106,13 +102,24 @@ fn test_create() {
 
 #[test]
 fn test_mul_div() {
+    // Try first with the base units
+    let len1 = METRE.from(12.5);
+    let len2 = METRE.from(10.0);
+    let area = len1 * len2;
+    assert_eq!(area.val_as(&SQMETRE).round_to(4), 125.0.round_to(4));
     let len1 = MM.from(12.5);
     let len2 = MM.from(10.0);
     let area = len1 * len2;
     println!("{:?}", area);
+    // Then below the base
     assert_eq!(area.val_as(&SQMM).round_to(4), 125.0.round_to(4));
     let len3 = area / len2;
     assert_eq!(len3.val_as(&MM).round_to(4), 12.5.round_to(4));
+    // And above
+    let len1 = KM.from(12.5);
+    let len2 = KM.from(10.0);
+    let area = len1 * len2;
+    assert_eq!(area.val_as(&SQKM).round_to(4), 125.0.round_to(4));
 }
 /// Get a list of the specified length
 ///
