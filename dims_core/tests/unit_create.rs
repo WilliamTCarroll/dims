@@ -1,3 +1,5 @@
+#[macro_use]
+extern crate dims_core;
 use dims_core::prelude::UnitSimple;
 use dims_core::unit_creation::*;
 use rand;
@@ -15,66 +17,51 @@ impl RoundTo for Flt {
     }
 }
 #[derive(PartialEq, Copy, Clone)]
-struct Length;
+pub struct Length;
 impl MeasureSystem for Length {}
 impl MultiplyBy<Length> for Length {
     type Output = Area;
 }
 #[derive(PartialEq)]
-struct Area;
+pub struct Area;
 impl MeasureSystem for Area {}
 impl DivideBy<Length> for Area {
     type Output = Length;
 }
 #[derive(PartialEq)]
-struct Mass;
+pub struct Mass;
 impl MeasureSystem for Mass {}
+
+si_unit! {"METRE", Length}
 
 static INCH: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
 };
-static MM: UnitSimple<Length> = UnitSimple::<Length> {
-    system: PhantomData,
-    offset: 0.0,
-    ratio: 1.0 / 1000.0,
-};
+use KILOMETRE as KM;
+use MILLIMETRE as MM;
 
-static SQMM: UnitSimple<Area> = UnitSimple::<Area> {
-    system: PhantomData,
-    offset: 0.0,
-    ratio: 1.0 / 1000000.0,
-};
-
-static GRAM: UnitSimple<Mass> = UnitSimple::<Mass> {
-    system: PhantomData,
-    offset: 0.0,
-    ratio: 1.0,
-};
-static KILOGRAM: UnitSimple<Mass> = UnitSimple::<Mass> {
-    system: PhantomData,
-    offset: 0.0,
-    ratio: 1.0 / 1000.0,
-};
-
+si_unit! {"SQ", "METRE", Area, 1000.0}
+use SQKILOMETRE as SQKM;
+use SQMILLIMETRE as SQMM;
+si_unit! {"GRAM", Mass}
 #[test]
 fn test_create() {
     let inch = INCH.from(12.0);
     let gram = GRAM.from(25.0);
-    let mm = inch.val_as(&MM);
+    let mm = inch.val_as(&MILLIMETRE);
     // Rounding fun to ensure 64 and 32 bit test okay
     assert_eq!(mm.round_to(4), 304.8);
     let kg = gram.val_as(&KILOGRAM);
-    assert_eq!(kg.round_to(2), 25000.0);
+    assert_eq!(kg.round_to(3), 0.025);
     // Check addition
     let dbl = &inch + &inch;
     if inch == dbl {}
     assert_eq!(dbl, INCH.from(24.0));
     // And subtraction
-    let no = &inch - &inch;
-    assert_eq!(no, INCH.from(0.0));
-
+    let zero = &inch - &inch;
+    assert_eq!(zero, INCH.from(0.0));
     // inch.val_as(&GRAM); // Should not work
 
     // Grab the pair of random numbers to add
@@ -115,13 +102,24 @@ fn test_create() {
 
 #[test]
 fn test_mul_div() {
+    // Try first with the base units
+    let len1 = METRE.from(12.5);
+    let len2 = METRE.from(10.0);
+    let area = len1 * len2;
+    assert_eq!(area.val_as(&SQMETRE).round_to(4), 125.0.round_to(4));
     let len1 = MM.from(12.5);
     let len2 = MM.from(10.0);
     let area = len1 * len2;
     println!("{:?}", area);
+    // Then below the base
     assert_eq!(area.val_as(&SQMM).round_to(4), 125.0.round_to(4));
     let len3 = area / len2;
     assert_eq!(len3.val_as(&MM).round_to(4), 12.5.round_to(4));
+    // And above
+    let len1 = KM.from(12.5);
+    let len2 = KM.from(10.0);
+    let area = len1 * len2;
+    assert_eq!(area.val_as(&SQKM).round_to(4), 125.0.round_to(4));
 }
 /// Get a list of the specified length
 ///

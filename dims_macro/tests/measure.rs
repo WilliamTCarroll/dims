@@ -24,11 +24,13 @@ const INCH: UnitSimple<Length> = UnitSimple::<Length> {
     offset: 0.0,
     ratio: 0.0254,
 };
+
 const MM: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
     offset: 0.0,
-    ratio: 1.0 / 1000.0,
+    ratio: 1.0e-3,
 };
+
 #[test]
 fn test_measure_impl() {
     //
