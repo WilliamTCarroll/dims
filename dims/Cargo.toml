@@ -9,7 +9,7 @@ keywords = ["measurement", "dimension", "unit"]
 
 [dependencies]
 dims_core = {path = "../dims_core"}
-dims_macro = {path = "../dims_macro"}
+dims_derive = {path = "../dims_derive"}
 
 [features]
 default = ["f32", "imp", "si"]

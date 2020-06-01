@@ -18,7 +18,7 @@ pub mod prelude {
 ///
 /// It also re-exports `PhantomData` which is needed for new Units.
 ///
-/// When making a new `MeasureSystem`, it is advised to use `dims_macro`,
+/// When making a new `MeasureSystem`, it is advised to use `dims_derive`,
 /// so you can quickly apply the required traits.
 ///
 /// This and the `prelude` module have overlapping contents, so you only need to import one

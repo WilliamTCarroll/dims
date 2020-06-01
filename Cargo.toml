@@ -2,6 +2,6 @@
 
 members = [
     "dims_core",
-    "dims_macro",
+    "dims_derive",
     "dims",
 ]

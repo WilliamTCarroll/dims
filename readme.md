@@ -36,7 +36,7 @@ These particular systems are already set up already in `dims`, but you can set u
 ```rust
 use dims_core::unit_creation::*;
 #[macro_use]
-use dims_macro;
+use dims_derive;
 
 // You can derive the required attributes on this struct
 #[derive(MeasureSystem)]
@@ -104,7 +104,7 @@ This crate should only be used directly if you want to make your own `Unit` or `
   - `Length` * `Length` = `Area` 
   - `Length` * `Area` = `Volume`
   - `Volume` / `Area` = `Length`
-
+- `si_unit!` macro; this will generate a whole set (or individual) SI units with the given info.
 ## dims
 This contains a set of pre-made systems and units.  These will be added to as time goes on.
 
@@ -133,4 +133,4 @@ There is no measurable impact on **release** performance (from what my very basi
 - More units
 - More systems
 - More documentation
-- macro to generate SI units from just the base unit
+- ~~macro to generate SI units from just the base unit~~

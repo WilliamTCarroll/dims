@@ -1,5 +1,5 @@
 [package]
-name = "dims_macro"
+name = "dims_derive"
 version = "0.1.0"
 authors = ["william"]
 edition = "2018"
