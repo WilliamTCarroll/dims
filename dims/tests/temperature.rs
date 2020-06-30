@@ -1,6 +1,6 @@
-use dims::imperial::temperature::*;
 use dims::prelude::*;
 use dims::si::temperature::*;
+use dims::us::temperature::*;
 /// Specify a function to round a numeric to the specified number of
 pub trait RoundTo {
     /// Round the given value to the number of decimals specified

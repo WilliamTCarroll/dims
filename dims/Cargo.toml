@@ -12,8 +12,8 @@ dims_core = {path = "../dims_core"}
 dims_derive = {path = "../dims_derive"}
 
 [features]
-default = ["f32", "imp", "si"]
+default = ["f32", "us", "si"]
 f32 = []
 f64 = []
-imp = []
+us = []
 si = []
