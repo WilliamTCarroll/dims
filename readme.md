@@ -11,7 +11,7 @@ If you just want to use the pre-generated units (Work in progress: creating more
 ```rust
 // Be sure you include prelude; this exposes required traits
 use dims::prelude::*;
-use dims::imperial::*;
+use dims::us::*;
 use dims::si::*;
 
 let feet = FOOT.from(12.5);
@@ -127,10 +127,11 @@ There is no measurable impact on **release** performance (from what my very basi
 - `f64` is available as an option
 ## Crate options for `dims`
 - `si` provides SI/Metric units (on by default)
-- `imperial` provides Imperial (or 'Merican) units (on by default)
+- `us` provides us (or 'Merican) units (on by default)
 
 ## PLANNED FEATURES
 - More units
 - More systems
 - More documentation
+- Tests for US units
 - ~~macro to generate SI units from just the base unit~~
