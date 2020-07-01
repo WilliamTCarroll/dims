@@ -29,3 +29,14 @@ pub const SQUARE_MILE: UnitSimple<Area> = UnitSimple {
     offset: 0.0,
     ratio: 2589988.110336,
 };
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn test_area() {
+        assert_eq!(SQUARE_INCH.from(1.0).as_base(), 0.0254_f32.powi(2));
+        assert_eq!(SQUARE_INCH.from(432.0), SQUARE_FOOT.from(3.0));
+        assert_eq!(SQUARE_FOOT.from(18.0), SQUARE_YARD.from(2.0));
+        assert_eq!(SQUARE_YARD.from(6_195_200.0), SQUARE_MILE.from(2.0));
+    }
+}

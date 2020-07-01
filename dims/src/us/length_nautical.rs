@@ -20,3 +20,14 @@ pub const MILE_NAUTICAL: UnitSimple<Length> = UnitSimple {
     offset: 0.0,
     ratio: 1852.0,
 };
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn test_length_nautical() {
+        assert_eq!(FATHOM.from(1.0).as_base(), 1.8288);
+        assert_eq!(FATHOM.from(240.0), CABLE.from(2.0));
+        assert_eq!(MILE_NAUTICAL.from(1.0).as_base(), 1852.0);
+    }
+}

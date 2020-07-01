@@ -9,6 +9,12 @@ pub const SQUARE_FOOT_SURVEY: UnitSimple<Area> = UnitSimple {
     ratio: 1_440_000.0 / 15_499_969.0,
 };
 
+pub const SQUARE_ROD: UnitSimple<Area> = UnitSimple {
+    system: PhantomData,
+    offset: 0.0,
+    ratio: SQUARE_CHAIN.ratio / 16.0,
+};
+
 pub const SQUARE_CHAIN: UnitSimple<Area> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
@@ -27,8 +33,28 @@ pub const SECTION: UnitSimple<Area> = UnitSimple {
     ratio: ACRE.ratio * 640.0,
 };
 
+pub const SQUARE_LEAGUE: UnitSimple<Area> = UnitSimple {
+    system: PhantomData,
+    offset: 0.0,
+    ratio: SECTION.ratio * 9.0,
+};
+
 pub const SURVEY_TOWNSHIP: UnitSimple<Area> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: SECTION.ratio * 36.0,
 };
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn test_area_survey() {
+        assert_eq!(SQUARE_FOOT_SURVEY.from(1.0).as_base(), 0.09290341);
+        assert_eq!(SQUARE_ROD.from(32.0), SQUARE_CHAIN.from(2.0));
+        assert_eq!(SQUARE_FOOT_SURVEY.from(8712.0), SQUARE_CHAIN.from(2.0));
+        assert_eq!(SQUARE_CHAIN.from(20.0), ACRE.from(2.0));
+        assert_eq!(ACRE.from(1280.0), SECTION.from(2.0));
+        assert_eq!(SECTION.from(72.0), SURVEY_TOWNSHIP.from(2.0));
+        assert_eq!(SQUARE_LEAGUE.from(8.0), SURVEY_TOWNSHIP.from(2.0));
+    }
+}

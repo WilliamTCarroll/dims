@@ -45,3 +45,18 @@ pub const LEAGUE: UnitSimple<Length> = UnitSimple {
     offset: 0.0,
     ratio: MILE_SURVEY.ratio * 3.0,
 };
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn test_length_survey() {
+        assert_eq!(LINK.from(1.0).as_base(), 0.2011684);
+        assert_eq!(FOOT_SURVEY.from(1.0).as_base(), 0.3048006);
+        assert_eq!(LINK.from(50.0), ROD.from(2.0));
+        assert_eq!(ROD.from(8.0), CHAIN.from(2.0));
+        assert_eq!(CHAIN.from(20.0), FURLONG.from(2.0));
+        assert_eq!(FURLONG.from(16.0), MILE_SURVEY.from(2.0));
+        assert_eq!(MILE_SURVEY.from(6.0), LEAGUE.from(2.0));
+    }
+}
