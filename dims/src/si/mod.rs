@@ -5,10 +5,11 @@ pub mod length {
     si_unit! {"METRE", crate::systems::Length}
 }
 pub mod area {
-    si_unit! {"SQUARE","METRE", crate::systems::Area,1000.0}
+    si_unit! {"SQUARE","METRE", crate::systems::Area,2,1.0}
 }
 pub mod volume {
-    si_unit! {"CUBIC","METRE", crate::systems::Volume,1000000.0}
+    si_unit! {"CUBIC","METRE", crate::systems::Volume,3,1.0}
+    si_unit! {"","LITRE", crate::systems::Volume,1,1.0e-3}
 }
 pub mod mass {
     si_unit! {"GRAM", crate::systems::Mass}
@@ -16,9 +17,10 @@ pub mod mass {
 #[cfg(test)]
 mod test {
     use super::*;
+    use area::*;
     use dims_core::prelude::*;
-    use length::METRE;
-    use volume::CUBICMETRE;
+    use length::*;
+    use volume::{CUBICDECIMETRE, CUBICMETRE, KILOLITRE, LITRE};
     #[test]
     fn test_mult_div() {
         let len1 = METRE.from(12.0);
@@ -36,5 +38,24 @@ mod test {
         assert_eq!(vol3 / area, len3);
         assert_eq!(vol3, vol4);
         assert_eq!(vol4 / len2 / len3, len1);
+        let vol5 = LITRE.from(1_200_000.0);
+        let vol6 = CUBICDECIMETRE.from(1_200_000.0);
+        assert_eq!(vol5, vol6);
+        assert_eq!(vol4, vol5);
+        let vol5 = KILOLITRE.from(120_000.0);
+        let vol6 = CUBICMETRE.from(120_000.0);
+        assert_eq!(vol5, vol6);
+        let vol5 = volume::CUBICDECAMETRE.from(1.325);
+        let vol6 = volume::MEGALITRE.from(1.325);
+        assert_eq!(vol5.as_base().round(), vol6.as_base().round()); // Floating point fun
+
+        // Check more non-base units
+        let area1 = SQUAREKILOMETRE.from(1.4);
+        let len1 = DECAMETRE.from(100.0);
+        let len2 = DECAMETRE.from(140.0); // 1_400_000
+        let area2 = len1 * len2;
+        assert_eq!(area1, area2);
+        let area3 = SQUAREMETRE.from(1_400_000.0);
+        assert_eq!(area2, area3);
     }
 }

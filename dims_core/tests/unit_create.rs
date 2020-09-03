@@ -42,7 +42,7 @@ static INCH: UnitSimple<Length> = UnitSimple::<Length> {
 use KILOMETRE as KM;
 use MILLIMETRE as MM;
 
-si_unit! {"SQ", "METRE", Area, 1000.0}
+si_unit! {"SQ", "METRE", Area, 2, 1.0}
 use SQKILOMETRE as SQKM;
 use SQMILLIMETRE as SQMM;
 si_unit! {"GRAM", Mass}
