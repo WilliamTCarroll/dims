@@ -27,9 +27,9 @@ let mass = GRAM.from(18.25);
 // You can also create them the other way around
 let this_works = Measure::new(&INCH,0.125);
 // You can grab the stored value as a float via
-let raw = mm.get_as(&INCH);
+let raw = mm.val_as(&INCH);
 // The compiler will not allow you to add between systems:
-let nope = mass + area; // <= Compiler throws an error
+// let nope = mass + area; // <= Compiler throws an error
 ```
 ## System and Unit Creation
 These particular systems are already set up already in `dims`, but you can set up your own systems:
