@@ -2,17 +2,17 @@
 pub mod temperature;
 
 pub mod length {
-    si_unit! {"METRE", crate::systems::Length}
+    si_unit! {"METRE", crate::systems::LengthSystem}
 }
 pub mod area {
-    si_unit! {"SQUARE","METRE", crate::systems::Area,2,1.0}
+    si_unit! {"SQUARE","METRE", crate::systems::AreaSystem,2,1.0}
 }
 pub mod volume {
-    si_unit! {"CUBIC","METRE", crate::systems::Volume,3,1.0}
-    si_unit! {"","LITRE", crate::systems::Volume,1,1.0e-3}
+    si_unit! {"CUBIC","METRE", crate::systems::VolumeSystem,3,1.0}
+    si_unit! {"","LITRE", crate::systems::VolumeSystem,1,1.0e-3}
 }
 pub mod mass {
-    si_unit! {"GRAM", crate::systems::Mass}
+    si_unit! {"GRAM", crate::systems::MassSystem}
 }
 #[cfg(test)]
 mod test {

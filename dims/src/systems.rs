@@ -1,64 +1,64 @@
 use dims_core::unit_creation::*;
 #[derive(MeasureSystem)]
-/// Length measures simple linear units
+/// LengthSystem measures simple linear units
 ///
 /// The base unit for this is the Metre
 ///
 /// The following operations are supported (as well as addition and subtraction):
-/// - Length * Length = Area
-/// - Length * Area = Volume
-pub struct Length;
-impl MultiplyBy<Length> for Length {
-    type Output = Area;
+/// - LengthSystem * LengthSystem = AreaSystem
+/// - LengthSystem * AreaSystem = VolumeSystem
+pub struct LengthSystem;
+impl MultiplyBy<LengthSystem> for LengthSystem {
+    type Output = AreaSystem;
 }
-impl MultiplyBy<Area> for Length {
-    type Output = Volume;
+impl MultiplyBy<AreaSystem> for LengthSystem {
+    type Output = VolumeSystem;
 }
 
 #[derive(MeasureSystem)]
-/// Unit measures two dimensional length
+/// Unit measures two dimensional LengthSystem
 ///
 /// The base unit for this is the Square Metre
 ///
 /// The following operations are supported (as well as addition and subtraction):
-/// - Length * Area = Volume
-/// - Area / Length = Length
-pub struct Area;
-impl MultiplyBy<Length> for Area {
-    type Output = Volume;
+/// - LengthSystem * AreaSystem = VolumeSystem
+/// - AreaSystem / LengthSystem = LengthSystem
+pub struct AreaSystem;
+impl MultiplyBy<LengthSystem> for AreaSystem {
+    type Output = VolumeSystem;
 }
-impl DivideBy<Length> for Area {
-    type Output = Length;
+impl DivideBy<LengthSystem> for AreaSystem {
+    type Output = LengthSystem;
 }
 
 #[derive(MeasureSystem)]
-/// Volume measures three dimensional length
+/// VolumeSystem measures three dimensional LengthSystem
 ///
 /// The base unit for this is the Cubic Metre
 ///
 /// The following operations are supported (as well as addition and subtraction):
-/// - Volume / Length = Area
-/// - Volume / Area = Length
-pub struct Volume;
-impl DivideBy<Length> for Volume {
-    type Output = Area;
+/// - VolumeSystem / LengthSystem = AreaSystem
+/// - VolumeSystem / AreaSystem = LengthSystem
+pub struct VolumeSystem;
+impl DivideBy<LengthSystem> for VolumeSystem {
+    type Output = AreaSystem;
 }
-impl DivideBy<Area> for Volume {
-    type Output = Length;
+impl DivideBy<AreaSystem> for VolumeSystem {
+    type Output = LengthSystem;
 }
 
 #[derive(MeasureSystem)]
-/// Temperature measures what it sounds like.
+/// TemperatureSystem measures what it sounds like.
 ///
 /// The base unit is Kelvin
 ///
 /// There is no check for negative values,
 /// as something like an endothermic reaction
 /// would subtract from the current temperature
-pub struct Temperature;
+pub struct TemperatureSystem;
 
 #[derive(MeasureSystem)]
-/// Mass measures the amount of matter in an object.
+/// MassSystem measures the amount of matter in an object.
 ///
 /// The base unit of this is Gram.
-pub struct Mass;
+pub struct MassSystem;

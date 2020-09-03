@@ -2,40 +2,40 @@
 //! These would be considered the most "common" length measurements for general use.
 //! See also: `length_survey` and `length_nautical`
 
-use crate::systems::Length;
+use crate::systems::LengthSystem;
 use dims_core::unit_creation::*;
 
-pub const POINT: UnitSimple<Length> = UnitSimple {
+pub const POINT: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 127.0 / 360_000.0,
 };
 
-pub const PICA: UnitSimple<Length> = UnitSimple {
+pub const PICA: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 127.0 / 30_000.0,
 };
 
-pub const INCH: UnitSimple<Length> = UnitSimple {
+pub const INCH: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
 };
 
-pub const FOOT: UnitSimple<Length> = UnitSimple {
+pub const FOOT: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.3048,
 };
 
-pub const YARD: UnitSimple<Length> = UnitSimple {
+pub const YARD: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.9144,
 };
 
-pub const MILE: UnitSimple<Length> = UnitSimple {
+pub const MILE: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 1609.344,

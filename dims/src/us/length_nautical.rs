@@ -1,21 +1,21 @@
 //! Units generally only used in the nautical context.
 
-use crate::systems::Length;
+use crate::systems::LengthSystem;
 use dims_core::unit_creation::*;
 
-pub const FATHOM: UnitSimple<Length> = UnitSimple {
+pub const FATHOM: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 1143.0 / 625.0,
 };
 
-pub const CABLE: UnitSimple<Length> = UnitSimple {
+pub const CABLE: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: FATHOM.ratio * 120.0,
 };
 
-pub const MILE_NAUTICAL: UnitSimple<Length> = UnitSimple {
+pub const MILE_NAUTICAL: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 1852.0,
