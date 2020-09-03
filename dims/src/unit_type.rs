@@ -1,0 +1,14 @@
+//! unit_type contains type aliases for each unit. \
+//! This lets you avoid re-typing the generic identifier for each of them
+use super::systems::*;
+use dims_core::prelude::Measure;
+
+pub type Length = Measure<LengthSystem>;
+
+pub type Area = Measure<AreaSystem>;
+
+pub type Volume = Measure<VolumeSystem>;
+
+pub type Mass = Measure<MassSystem>;
+
+pub type Temperature = Measure<TemperatureSystem>;

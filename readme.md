@@ -31,6 +31,19 @@ let raw = mm.val_as(&INCH);
 // The compiler will not allow you to add between systems:
 // let nope = mass + area; // <= Compiler throws an error
 ```
+## Usage in functions or structs
+The `dims` crate contains type aliases for each generic measure.  EX:
+```rust
+pub type Length = Measure<LengthSystem>;
+```
+These are included in the mod `prelude`, or you could import `unit_type`
+```rust
+use dims::prelude::{Length, Area};
+
+fn do_something(len1: Length, len2: Length) -> Area {
+    // ...
+}
+```
 ## System and Unit Creation
 These particular systems are already set up already in `dims`, but you can set up your own systems:
 ```rust
@@ -40,25 +53,25 @@ use dims_derive;
 
 // You can derive the required attributes on this struct
 #[derive(MeasureSystem)]
-pub struct Length;
+pub struct LengthSystem;
 // Allow for conversion between the systems
 // Multiple `MultiplyBy` and `DivideBy` traits can be applied for each `MeasureSystem`
-impl MultiplyBy<Length> for Length {
-    type Output = Area;
+impl MultiplyBy<LengthSystem> for LengthSystem {
+    type Output = AreaSystem;
 }
 
 #[derive(MeasureSystem)]
-pub struct Area;
+pub struct AreaSystem;
 
-impl DivideBy<Length> for Area {
-    type Output = Length;
+impl DivideBy<LengthSystem> for AreaSystem {
+    type Output = LengthSystem;
 }
 
 #[derive(MeasureSystem)]
-pub struct Temperature;
+pub struct TemperatureSystem;
 // Set up some units, now
 
-pub const FAHRENHEIT: UnitSimple<Temperature> = UnitSimple {
+pub const FAHRENHEIT: UnitSimple<TemperatureSystem> = UnitSimple {
     /// The system is used for compiler warnings, but has no memory impact in production code
     system: PhantomData,
     // Offset is used to change the zero point.  Most of the time, this is zero
@@ -66,7 +79,7 @@ pub const FAHRENHEIT: UnitSimple<Temperature> = UnitSimple {
     // Ratio is multiplied to get to the base unit
     ratio: 5.0 / 9.0,
 };
-pub const CELCIUS: UnitSimple<Temperature> = UnitSimple {
+pub const CELCIUS: UnitSimple<TemperatureSystem> = UnitSimple {
     system: PhantomData,
     offset: 273.15,
     ratio: 1.0,
