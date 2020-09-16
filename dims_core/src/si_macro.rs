@@ -26,41 +26,69 @@
 /// - repeat: Number of times to repeat the ratio (EX: 3 for volume, excluding litre)
 macro_rules! si_unit {
     // Set up a new si unit system with no prefix
-    ($base:literal, $system:ty) => {
-        si_unit!("", $base, $system, 1, 1.0);
+    (
+        system: $system:ty,
+        base: $base:literal,
+        plural: $plural:literal,
+        abbr: $abbr:literal
+    ) => {
+        si_unit!(system: $system, prefix: "", base: $base, plural: $plural, abbr: $abbr, repeat: 1, ratio: 1.0);
     };
     // Set up a new si unit system with the given prefix
-    ($prefix:literal, $base:literal, $system:ty, $repeat:literal, $off:literal) => {
-        si_unit!($prefix, "YOTTA", $base, $system, 1.0e+24 * $off, $repeat);
-        si_unit!($prefix, "ZETTA", $base, $system, 1.0e+21 * $off, $repeat);
-        si_unit!($prefix, "EXA", $base, $system, 1.0e+18 * $off, $repeat);
-        si_unit!($prefix, "PETA", $base, $system, 1.0e+15 * $off, $repeat);
-        si_unit!($prefix, "TERA", $base, $system, 1.0e+12 * $off, $repeat);
-        si_unit!($prefix, "GIGA", $base, $system, 1.0e+9 * $off, $repeat);
-        si_unit!($prefix, "MEGA", $base, $system, 1.0e+6 * $off, $repeat);
-        si_unit!($prefix, "KILO", $base, $system, 1.0e+3 * $off, $repeat);
-        si_unit!($prefix, "HECTO", $base, $system, 1.0e+2 * $off, $repeat);
-        si_unit!($prefix, "DECA", $base, $system, 1.0e+1 * $off, $repeat);
-        si_unit!($prefix, "", $base, $system, 1.0 * $off, $repeat);
-        si_unit!($prefix, "DECI", $base, $system, 1.0e-1 * $off, $repeat);
-        si_unit!($prefix, "CENTI", $base, $system, 1.0e-2 * $off, $repeat);
-        si_unit!($prefix, "MILLI", $base, $system, 1.0e-3 * $off, $repeat);
-        si_unit!($prefix, "MICRO", $base, $system, 1.0e-6 * $off, $repeat);
-        si_unit!($prefix, "NANO", $base, $system, 1.0e-9 * $off, $repeat);
-        si_unit!($prefix, "PICO", $base, $system, 1.0e-12 * $off, $repeat);
-        si_unit!($prefix, "FEMTO", $base, $system, 1.0e-15 * $off, $repeat);
-        si_unit!($prefix, "ATTO", $base, $system, 1.0e-18 * $off, $repeat);
-        si_unit!($prefix, "ZEPTO", $base, $system, 1.0e-21 * $off, $repeat);
-        si_unit!($prefix, "YOCTO", $base, $system, 1.0e-24 * $off, $repeat);
+    (
+        system: $system:ty,
+        prefix: $prefix:literal,
+        base: $base:literal,
+        plural: $plural:literal,
+        abbr: $abbr:literal,
+        repeat: $repeat:literal,
+        ratio: $ratio:literal
+    ) => {
+        si_unit!($prefix, "yotta", $base, $system, 1.0e+24 * $ratio, $repeat,$plural, "Y", $abbr);
+        si_unit!($prefix, "zetta", $base, $system, 1.0e+21 * $ratio, $repeat, $plural, "Z", $abbr);
+        si_unit!($prefix, "exa", $base, $system, 1.0e+18 * $ratio, $repeat, $plural, "E", $abbr);
+        si_unit!($prefix, "peta", $base, $system, 1.0e+15 * $ratio, $repeat, $plural, "P", $abbr);
+        si_unit!($prefix, "tera", $base, $system, 1.0e+12 * $ratio, $repeat, $plural, "T", $abbr);
+        si_unit!($prefix, "giga", $base, $system, 1.0e+9 * $ratio, $repeat, $plural, "G", $abbr);
+        si_unit!($prefix, "mega", $base, $system, 1.0e+6 * $ratio, $repeat, $plural, "M", $abbr);
+        si_unit!($prefix, "kilo", $base, $system, 1.0e+3 * $ratio, $repeat, $plural, "k", $abbr);
+        si_unit!($prefix, "hecto", $base, $system, 1.0e+2 * $ratio, $repeat, $plural, "h", $abbr);
+        si_unit!($prefix, "deca", $base, $system, 1.0e+1 * $ratio, $repeat, $plural, "da", $abbr);
+        si_unit!($prefix, "", $base, $system, 1.0 * $ratio, $repeat, $plural, "", $abbr);
+        si_unit!($prefix, "deci", $base, $system, 1.0e-1 * $ratio, $repeat, $plural, "d", $abbr);
+        si_unit!($prefix, "centi", $base, $system, 1.0e-2 * $ratio, $repeat, $plural, "c", $abbr);
+        si_unit!($prefix, "milli", $base, $system, 1.0e-3 * $ratio, $repeat, $plural, "m", $abbr);
+        si_unit!($prefix, "micro", $base, $system, 1.0e-6 * $ratio, $repeat, $plural, "μ", $abbr);
+        si_unit!($prefix, "nano", $base, $system, 1.0e-9 * $ratio, $repeat, $plural, "n", $abbr);
+        si_unit!($prefix, "pico", $base, $system, 1.0e-12 * $ratio, $repeat, $plural, "p", $abbr);
+        si_unit!($prefix, "femto", $base, $system, 1.0e-15 * $ratio, $repeat, $plural, "f", $abbr);
+        si_unit!($prefix, "atto", $base, $system, 1.0e-18 * $ratio, $repeat, $plural, "a", $abbr);
+        si_unit!($prefix, "zepto", $base, $system, 1.0e-21 * $ratio, $repeat, $plural, "z", $abbr);
+        si_unit!($prefix, "yocto", $base, $system, 1.0e-24 * $ratio, $repeat, $plural, "y", $abbr);
     };
     // Set up an individual SI unit with the given info
-    ($prefix:literal, $unit_pre:literal, $base:literal, $system:ty, $ratio:expr, $repeat:literal) => {
+    (
+        $prefix:literal,
+        $unit_pre:literal,
+        $base:literal,
+        $system:ty,
+        $ratio:expr,
+        $repeat:literal,
+        $plural:literal,
+        $abbr1:literal,
+        $abbr2:literal) => {
         $crate::unit_creation::paste::item! {
-            pub static [<$prefix $unit_pre $base>]: $crate::unit_creation::UnitSimple<$system> =
+            pub static [<$prefix:upper $unit_pre:upper $base:upper>]: $crate::unit_creation::UnitSimple<$system> =
             $crate::unit_creation::UnitSimple::<$system> {
                 system: $crate::unit_creation::PhantomData,
                 ratio: repeat_item!($ratio, $repeat),
                 offset: 0.0,
+                #[cfg(feature = "std")]
+                abbr: concat!($abbr1, $abbr2),
+                #[cfg(feature = "std")]
+                singular: concat!($prefix, $base),
+                #[cfg(feature = "std")]
+                plural: concat!($prefix, $plural),
             };
         }
     };

@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate dims_derive;
+use core::marker::PhantomData;
 use dims_core::prelude::*;
-use std::marker::PhantomData;
 
 /// Specify a function to round a numeric to the specified number of
 pub trait RoundTo {
@@ -23,12 +23,18 @@ const INCH: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
+    abbr: "in",
+    singular: "inch",
+    plural: "inches",
 };
 
 const MM: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
     offset: 0.0,
     ratio: 1.0e-3,
+    abbr: "mm",
+    singular: "millimetre",
+    plural: "millimetres",
 };
 
 #[test]

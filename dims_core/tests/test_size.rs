@@ -3,6 +3,12 @@ static INCH: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
+    #[cfg(feature = "std")]
+    abbr: "in",
+    #[cfg(feature = "std")]
+    singular: "inch",
+    #[cfg(feature = "std")]
+    plural: "inches",
 };
 #[derive(Copy, Clone)]
 struct Length;

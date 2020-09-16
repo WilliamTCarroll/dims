@@ -32,20 +32,23 @@ impl DivideBy<Length> for Area {
 pub struct Mass;
 impl MeasureSystem for Mass {}
 
-si_unit! {"METRE", Length}
+si_unit! {system: Length,base: "metre", plural: "metres", abbr: "m"}
 
 static INCH: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
+    abbr: "in",
+    singular: "inch",
+    plural: "inches",
 };
 use KILOMETRE as KM;
 use MILLIMETRE as MM;
-
-si_unit! {"SQ", "METRE", Area, 2, 1.0}
+si_unit! {system: Area, prefix: "sq",base: "metre", plural: "metres", abbr:"m²", repeat: 2, ratio: 1.0}
 use SQKILOMETRE as SQKM;
 use SQMILLIMETRE as SQMM;
-si_unit! {"GRAM", Mass}
+si_unit! {system: Mass,base: "gram", plural: "grams", abbr:"g"}
+
 #[test]
 fn test_create() {
     let inch = INCH.from(12.0);
@@ -62,6 +65,7 @@ fn test_create() {
     // And subtraction
     let zero = &inch - &inch;
     assert_eq!(zero, INCH.from(0.0));
+
     // inch.val_as(&GRAM); // Should not work
 
     // Grab the pair of random numbers to add
