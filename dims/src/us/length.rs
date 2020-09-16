@@ -9,36 +9,72 @@ pub const POINT: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 127.0 / 360_000.0,
+    #[cfg(feature = "std")]
+    abbr: "p",
+    #[cfg(feature = "std")]
+    singular: "point",
+    #[cfg(feature = "std")]
+    plural: "points",
 };
 
 pub const PICA: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 127.0 / 30_000.0,
+    #[cfg(feature = "std")]
+    abbr: "pc",
+    #[cfg(feature = "std")]
+    singular: "pica",
+    #[cfg(feature = "std")]
+    plural: "picas",
 };
 
 pub const INCH: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
+    #[cfg(feature = "std")]
+    abbr: "in",
+    #[cfg(feature = "std")]
+    singular: "inch",
+    #[cfg(feature = "std")]
+    plural: "inches",
 };
 
 pub const FOOT: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.3048,
+    #[cfg(feature = "std")]
+    abbr: "ft",
+    #[cfg(feature = "std")]
+    singular: "foot",
+    #[cfg(feature = "std")]
+    plural: "feet",
 };
 
 pub const YARD: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.9144,
+    #[cfg(feature = "std")]
+    abbr: "yd",
+    #[cfg(feature = "std")]
+    singular: "yard",
+    #[cfg(feature = "std")]
+    plural: "yards",
 };
 
 pub const MILE: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 1609.344,
+    #[cfg(feature = "std")]
+    abbr: "mi",
+    #[cfg(feature = "std")]
+    singular: "mile",
+    #[cfg(feature = "std")]
+    plural: "miles",
 };
 
 #[cfg(test)]

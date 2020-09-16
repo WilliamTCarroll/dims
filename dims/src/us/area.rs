@@ -10,24 +10,48 @@ pub const SQUARE_INCH: UnitSimple<AreaSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: SQUARE_FOOT.ratio / 144.0,
+    #[cfg(feature = "std")]
+    abbr: "in²",
+    #[cfg(feature = "std")]
+    singular: "square inch",
+    #[cfg(feature = "std")]
+    plural: "square inches",
 };
 
 pub const SQUARE_FOOT: UnitSimple<AreaSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.09290304,
+    #[cfg(feature = "std")]
+    abbr: "ft²",
+    #[cfg(feature = "std")]
+    singular: "square foot",
+    #[cfg(feature = "std")]
+    plural: "square feet",
 };
 
 pub const SQUARE_YARD: UnitSimple<AreaSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: SQUARE_FOOT.ratio * 9.0,
+    #[cfg(feature = "std")]
+    abbr: "yd²",
+    #[cfg(feature = "std")]
+    singular: "square yard",
+    #[cfg(feature = "std")]
+    plural: "square yards",
 };
 
 pub const SQUARE_MILE: UnitSimple<AreaSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 2589988.110336,
+    #[cfg(feature = "std")]
+    abbr: "mi²",
+    #[cfg(feature = "std")]
+    singular: "square mile",
+    #[cfg(feature = "std")]
+    plural: "square miles",
 };
 #[cfg(test)]
 mod test {

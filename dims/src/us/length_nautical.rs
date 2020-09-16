@@ -7,18 +7,36 @@ pub const FATHOM: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 1143.0 / 625.0,
+    #[cfg(feature = "std")]
+    abbr: "ftm",
+    #[cfg(feature = "std")]
+    singular: "fathom",
+    #[cfg(feature = "std")]
+    plural: "fathoms",
 };
 
 pub const CABLE: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: FATHOM.ratio * 120.0,
+    #[cfg(feature = "std")]
+    abbr: "cb",
+    #[cfg(feature = "std")]
+    singular: "cable",
+    #[cfg(feature = "std")]
+    plural: "cables",
 };
 
 pub const MILE_NAUTICAL: UnitSimple<LengthSystem> = UnitSimple {
     system: PhantomData,
     offset: 0.0,
     ratio: 1852.0,
+    #[cfg(feature = "std")]
+    abbr: "nmi",
+    #[cfg(feature = "std")]
+    singular: "nautical mile",
+    #[cfg(feature = "std")]
+    plural: "nautical miles",
 };
 
 #[cfg(test)]
