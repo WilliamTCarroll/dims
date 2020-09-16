@@ -13,6 +13,7 @@ paste = "1.0"
 rand = "0.7"
 
 [features]
-default = ["f32"]
+default = ["f32", "std"]
+std = []
 f32 = []
 f64 = []

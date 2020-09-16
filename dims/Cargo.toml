@@ -8,12 +8,17 @@ keywords = ["measurement", "dimension", "unit"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dims_core = {path = "../dims_core"}
+
 dims_derive = {path = "../dims_derive"}
+[dependencies.dims_core]
+path = "../dims_core"
+default-features = false
 
 [features]
-default = ["f32", "us", "si"]
-f32 = []
-f64 = []
+default = ["std","f32", "us", "si"]
+# Pass each of these along to core
+std = ["dims_core/std"]
+f32 = ["dims_core/f32"]
+f64 = ["dims_core/f64"]
 us = []
 si = []
