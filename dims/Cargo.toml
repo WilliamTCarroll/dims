@@ -15,10 +15,9 @@ path = "../dims_core"
 default-features = false
 
 [features]
-default = ["std","f32", "us", "si"]
+default = ["us", "si", "str"]
 # Pass each of these along to core
-std = ["dims_core/std"]
-f32 = ["dims_core/f32"]
+no_std = ["dims_core/no_std"]
 f64 = ["dims_core/f64"]
 us = []
 si = []

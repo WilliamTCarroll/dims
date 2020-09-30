@@ -1,53 +1,53 @@
 //! Units of volume used for both wet and dry that fall under the "US Customary" label.
 //! Units falling under "US Legal"
 
-use crate::systems::VolumeSystem;
+pub use super::volume::VolumeUnit;
 use dims_core::unit_creation::*;
 
-pub const TEASPOON: UnitSimple<VolumeSystem> = UnitSimple {
+pub const TEASPOON: VolumeUnit = VolumeUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: FLUID_OUNCE_CUSTOMARY.ratio / 6.0,
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     abbr: "tsp",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     singular: "teaspoon",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     plural: "teaspoons",
 };
 
-pub const TABLESPOON: UnitSimple<VolumeSystem> = UnitSimple {
+pub const TABLESPOON: VolumeUnit = VolumeUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: FLUID_OUNCE_CUSTOMARY.ratio / 2.0,
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     abbr: "Tbsp",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     singular: "tablespoon",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     plural: "tablespoons",
 };
 
-pub const CUP_CUSTOMARY: UnitSimple<VolumeSystem> = UnitSimple {
+pub const CUP_CUSTOMARY: VolumeUnit = VolumeUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0002365882365,
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     abbr: "cp",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     singular: "cup",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     plural: "cups",
 };
 
-pub const FLUID_OUNCE_CUSTOMARY: UnitSimple<VolumeSystem> = UnitSimple {
+pub const FLUID_OUNCE_CUSTOMARY: VolumeUnit = VolumeUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: CUP_CUSTOMARY.ratio / 8.0,
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     abbr: "fl oz",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     singular: "fluid ounce",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     plural: "fluid ounces",
 };

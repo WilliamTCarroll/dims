@@ -12,3 +12,8 @@ pub type Volume = Measure<VolumeSystem>;
 pub type Mass = Measure<MassSystem>;
 
 pub type Temperature = Measure<TemperatureSystem>;
+
+#[cfg(not(feature = "str"))]
+pub type UnitType<'t, S> = dims_core::unit_creation::UnitSimple<'t, S>;
+#[cfg(feature = "str")]
+pub type UnitType<'t, S> = dims_core::unit_creation::UnitFormat<'t, S>;

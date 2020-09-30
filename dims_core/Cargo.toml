@@ -9,11 +9,8 @@ edition = "2018"
 [dependencies]
 paste = "1.0"
 
-[dev-dependencies]
-rand = "0.7"
-
 [features]
-default = ["f32", "std"]
-std = []
-f32 = []
+default = ["str"]
+no_std = []
+str = []
 f64 = []

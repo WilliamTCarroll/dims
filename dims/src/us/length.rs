@@ -5,75 +5,77 @@
 use crate::systems::LengthSystem;
 use dims_core::unit_creation::*;
 
-pub const POINT: UnitSimple<LengthSystem> = UnitSimple {
+pub type LengthUnit<'t> = super::UnitType<'t, LengthSystem>;
+
+pub const POINT: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: 127.0 / 360_000.0,
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     abbr: "p",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     singular: "point",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     plural: "points",
 };
 
-pub const PICA: UnitSimple<LengthSystem> = UnitSimple {
+pub const PICA: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: 127.0 / 30_000.0,
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     abbr: "pc",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     singular: "pica",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     plural: "picas",
 };
 
-pub const INCH: UnitSimple<LengthSystem> = UnitSimple {
+pub const INCH: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     abbr: "in",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     singular: "inch",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     plural: "inches",
 };
 
-pub const FOOT: UnitSimple<LengthSystem> = UnitSimple {
+pub const FOOT: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.3048,
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     abbr: "ft",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     singular: "foot",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     plural: "feet",
 };
 
-pub const YARD: UnitSimple<LengthSystem> = UnitSimple {
+pub const YARD: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.9144,
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     abbr: "yd",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     singular: "yard",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     plural: "yards",
 };
 
-pub const MILE: UnitSimple<LengthSystem> = UnitSimple {
+pub const MILE: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: 1609.344,
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     abbr: "mi",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     singular: "mile",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     plural: "miles",
 };
 

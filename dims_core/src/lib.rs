@@ -1,6 +1,4 @@
-#![cfg_attr(not(feature = "std"), no_std)]
-pub mod float;
-mod si_macro;
+#![cfg_attr(feature = "no_std", no_std)]
 mod system;
 /// ## prelude
 ///

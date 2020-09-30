@@ -1,41 +1,40 @@
 //! Units generally only used in the nautical context.
-
-use crate::systems::LengthSystem;
+pub use super::length::LengthUnit;
 use dims_core::unit_creation::*;
 
-pub const FATHOM: UnitSimple<LengthSystem> = UnitSimple {
+pub const FATHOM: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: 1143.0 / 625.0,
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     abbr: "ftm",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     singular: "fathom",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     plural: "fathoms",
 };
 
-pub const CABLE: UnitSimple<LengthSystem> = UnitSimple {
+pub const CABLE: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: FATHOM.ratio * 120.0,
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     abbr: "cb",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     singular: "cable",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     plural: "cables",
 };
 
-pub const MILE_NAUTICAL: UnitSimple<LengthSystem> = UnitSimple {
+pub const MILE_NAUTICAL: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: 1852.0,
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     abbr: "nmi",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     singular: "nautical mile",
-    #[cfg(feature = "std")]
+    #[cfg(feature = "str")]
     plural: "nautical miles",
 };
 
