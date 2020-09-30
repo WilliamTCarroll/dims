@@ -1,5 +1,5 @@
 #[macro_use]
-extern crate dims_core;
+extern crate dims_macro;
 use dims_core::prelude::UnitSimple;
 use dims_core::unit_creation::*;
 use rand;
@@ -38,9 +38,6 @@ static INCH: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
-    abbr: "in",
-    singular: "inch",
-    plural: "inches",
 };
 use KILOMETRE as KM;
 use MILLIMETRE as MM;

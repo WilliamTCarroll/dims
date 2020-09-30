@@ -2,6 +2,7 @@
 #[macro_use]
 extern crate dims_derive;
 #[macro_use]
+extern crate dims_macro;
 extern crate dims_core;
 
 #[cfg(feature = "si")]

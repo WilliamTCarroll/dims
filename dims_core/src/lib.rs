@@ -33,5 +33,4 @@ pub mod unit_creation {
     };
     pub use super::Flt;
     pub use core::marker::PhantomData;
-    pub use paste;
 }
