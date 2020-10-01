@@ -111,13 +111,18 @@ This crate should only be used directly if you want to make your own `Unit` or `
 - `Measure`: The actual value stored stored.  Any value created (like inches or pounds) will be converted to the base unit (EX: Metre for Length, Gram for Mass).
 - `UnitTrait`: A trait used to create a type of unit.  This allows for creation of a custom conversion function between units.  For nearly all situations, `UnitSimple` can be used.
 - `UnitSimple`: A basic implementation of `UnitTrait`.  The ratio between the specified unit and the base unit are specified, as well as the offset.
+- `UnitFormat`: A bit more complex implementation of `UnitTrait`.  The ratio between the specified unit and the base unit are specified, as well as the offset.  In addition, the textual name for the unit is stored.
 
 ### Other Important Items
 - `MultiplyBy` & `DivideBy`: Traits to allow for conversion between different unit systems.  EX: 
   - `Length` * `Length` = `Area` 
   - `Length` * `Area` = `Volume`
   - `Volume` / `Area` = `Length`
-- `si_unit!` macro; this will generate a whole set (or individual) SI units with the given info.
+## dims_macro
+This contains the `si_unit!` macro, which will generate a whole set (or individual) SI units with the given info.
+TODO: EXAMPLE
+## dims_derive
+This contains the `#[derive(MeasureSystem)]` which allows you to automatically derive the info required for a `MeasureSystem`.
 ## dims
 This contains a set of pre-made systems and units.  These will be added to as time goes on.
 
@@ -130,15 +135,19 @@ The currently set-up systems are
 | Volume      | Cubic Metre |
 | Mass        | Gram        |
 | Temperature | Kelvin      |
-
+|             |             |
 # Other Notes
 ## Performance
-There is no measurable impact on **release** performance (from what my very basic tests can show).  The `Measure` struct is `[repr(transparent)]`, so everything but the value itself is optimized away.  **Debug mode code does have a hit to performance, however.**
-## This crate is no_std
+There is no measurable impact on **release** performance compared to the stored value (from what my very basic tests can show).  The `Measure` struct is `[repr(transparent)]`, so everything but the value itself is optimized away.  **Debug mode code does have a hit to performance, however.**
 ## Crate options for `dims` and `dims_core`
-- `f32` is the default unit stored
-- `f64` is available as an option
+- `f64` is available as an option; `f32` is the default
+- `no_std` will set the crates to `no_std` (go figure).\
+This disables the `UnitFormatTrait` (as the functions return `String`), but can still be used with `str` (see below) to store the unit name info.
 ## Crate options for `dims`
+- `str` (default) will utilize `UnitFormat` and store:
+  - `abbr`: Abbreviated unit name (`m` or `ft`)
+  - `singular`: Singular name of a unit (`metre` or `foot`)
+  - `plural`: Plural name of the unit (`metres` or `feet`)
 - `si` provides SI/Metric units (on by default)
 - `us` provides us (or 'Merican) units (on by default)
 
@@ -148,3 +157,5 @@ There is no measurable impact on **release** performance (from what my very basi
 - More documentation
 - Tests for US units
 - ~~macro to generate SI units from just the base unit~~
+- Generic storage type (allowing any numeric type)
+- Compound units more generic (EX: Mass/Volume for Density)
