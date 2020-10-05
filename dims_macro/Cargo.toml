@@ -1,26 +1,25 @@
 [package]
-name = "dims"
+name = "dims_macro"
 version = "0.2.0"
-authors = ["william"]
+authors = ["William <antagonisticapple@gmail.com>"]
 edition = "2018"
-keywords = ["measurement", "dimension", "unit"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+paste = "1.0"
+
+[dev-dependencies]
+rand = "0.7"
 
 dims_derive = {path = "../dims_derive"}
 [dependencies.dims_core]
 path = "../dims_core"
 default-features = false
-[dependencies.dims_macro]
-path = "../dims_macro"
-default-features = false
+
 [features]
-default = ["us", "si", "str"]
+default = ["str"]
 # Pass each of these along to core
 no_std = ["dims_core/no_std"]
-str = ["dims_core/str","dims_macro/str"]
+str = ["dims_core/str"]
 f64 = ["dims_core/f64"]
-us = []
-si = []

@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate dims_derive;
+use core::marker::PhantomData;
 use dims_core::prelude::*;
-use std::marker::PhantomData;
 
 /// Specify a function to round a numeric to the specified number of
 pub trait RoundTo {

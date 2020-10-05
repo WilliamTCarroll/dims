@@ -10,3 +10,5 @@ pub mod volume_customary;
 pub mod volume_dry;
 pub mod volume_nutritional;
 pub mod volume_wet;
+
+pub use crate::unit_type::UnitType;

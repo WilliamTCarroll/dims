@@ -1,8 +1,11 @@
 use dims_core::unit_creation::*;
-static INCH: UnitSimple<Length> = UnitSimple::<Length> {
+static INCH: UnitFormat<Length> = UnitFormat::<Length> {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
+    abbr: "in",
+    singular: "inch",
+    plural: "inches",
 };
 #[derive(Copy, Clone)]
 struct Length;
@@ -31,6 +34,8 @@ fn check_measure_size() {
     assert_eq!(SIZE, size_of::<Measure<Length>>());
     assert_eq!(SIZE, size_of_val(&wrap));
     assert_eq!(SIZE, size_of_val(&raw));
+    // Two floats and the strings
+    assert_eq!(SIZE + SIZE + 48, size_of_val(&INCH));
 }
 
 #[cfg(test)]

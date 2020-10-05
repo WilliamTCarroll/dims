@@ -3,5 +3,8 @@
 members = [
     "dims_core",
     "dims_derive",
+    "dims_macro",
+    # Intentionally excluded; this would mess with the flags in the other packages
+    # "test_nostd",
     "dims",
 ]

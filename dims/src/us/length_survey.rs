@@ -1,49 +1,90 @@
 //! Length units still in common use in the US for surveying.
 //! Some of these will vary slightly from "general" units (EX: 1.0 FOOT != 1.0 FOOT_SURVEY)
-
-use crate::systems::LengthSystem;
+pub use super::length::LengthUnit;
 use dims_core::unit_creation::*;
 
-pub const LINK: UnitSimple<LengthSystem> = UnitSimple {
+pub const LINK: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: 792.0 / 3937.0,
+    #[cfg(feature = "str")]
+    abbr: "li",
+    #[cfg(feature = "str")]
+    singular: "link",
+    #[cfg(feature = "str")]
+    plural: "links",
 };
 
-pub const FOOT_SURVEY: UnitSimple<LengthSystem> = UnitSimple {
+pub const FOOT_SURVEY: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: 1200.0 / 3937.0,
+    #[cfg(feature = "str")]
+    abbr: "ft",
+    #[cfg(feature = "str")]
+    singular: "foot",
+    #[cfg(feature = "str")]
+    plural: "feet",
 };
 
-pub const ROD: UnitSimple<LengthSystem> = UnitSimple {
+pub const ROD: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: LINK.ratio * 25.0,
+    #[cfg(feature = "str")]
+    abbr: "rd",
+    #[cfg(feature = "str")]
+    singular: "rod",
+    #[cfg(feature = "str")]
+    plural: "rods",
 };
 
-pub const CHAIN: UnitSimple<LengthSystem> = UnitSimple {
+pub const CHAIN: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: ROD.ratio * 4.0,
+    #[cfg(feature = "str")]
+    abbr: "ch",
+    #[cfg(feature = "str")]
+    singular: "chain",
+    #[cfg(feature = "str")]
+    plural: "chains",
 };
 
-pub const FURLONG: UnitSimple<LengthSystem> = UnitSimple {
+pub const FURLONG: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: CHAIN.ratio * 10.0,
+    #[cfg(feature = "str")]
+    abbr: "fur",
+    #[cfg(feature = "str")]
+    singular: "furlong",
+    #[cfg(feature = "str")]
+    plural: "furlongs",
 };
 
-pub const MILE_SURVEY: UnitSimple<LengthSystem> = UnitSimple {
+pub const MILE_SURVEY: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: FURLONG.ratio * 8.0,
+    #[cfg(feature = "str")]
+    abbr: "mi",
+    #[cfg(feature = "str")]
+    singular: "mile",
+    #[cfg(feature = "str")]
+    plural: "miles",
 };
 
-pub const LEAGUE: UnitSimple<LengthSystem> = UnitSimple {
+pub const LEAGUE: LengthUnit = LengthUnit {
     system: PhantomData,
     offset: 0.0,
     ratio: MILE_SURVEY.ratio * 3.0,
+    #[cfg(feature = "str")]
+    abbr: "lea",
+    #[cfg(feature = "str")]
+    singular: "league",
+    #[cfg(feature = "str")]
+    plural: "leagues",
 };
 
 #[cfg(test)]

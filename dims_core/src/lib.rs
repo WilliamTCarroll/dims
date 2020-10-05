@@ -1,6 +1,6 @@
-#![no_std]
-pub mod float;
-mod si_macro;
+#![cfg_attr(feature = "no_std", no_std)]
+mod float;
+pub use float::Flt;
 mod system;
 /// ## prelude
 ///
@@ -8,8 +8,11 @@ mod system;
 ///
 /// This and the `unit_creation` module have overlapping contents, so you only need to import one
 pub mod prelude {
-    pub use super::float::Flt;
-    pub use super::system::{Measure, UnitSimple, UnitTrait};
+    #[cfg(not(feature = "no_std"))]
+    #[cfg(feature = "str")]
+    pub use super::system::UnitFormatTrait;
+    pub use super::system::{Measure, UnitFormat, UnitSimple, UnitTrait};
+    pub use super::Flt;
     pub use core::marker::PhantomData;
 }
 /// ## unit_creation
@@ -23,8 +26,11 @@ pub mod prelude {
 ///
 /// This and the `prelude` module have overlapping contents, so you only need to import one
 pub mod unit_creation {
-    pub use super::float::Flt;
-    pub use super::system::{DivideBy, Measure, MeasureSystem, MultiplyBy, UnitSimple, UnitTrait};
+    #[cfg(not(feature = "no_std"))]
+    pub use super::system::UnitFormatTrait;
+    pub use super::system::{
+        DivideBy, Measure, MeasureSystem, MultiplyBy, UnitFormat, UnitSimple, UnitTrait,
+    };
+    pub use super::Flt;
     pub use core::marker::PhantomData;
-    pub use paste;
 }

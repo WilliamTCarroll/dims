@@ -9,13 +9,13 @@ use core::marker::PhantomData;
 /// `self.to_self = (val / self.ratio) - self.offset`
 ///
 /// If greater flexibility is required, please see `UnitTrait`
-pub struct UnitSimple<S: MS> {
-    pub system: PhantomData<S>,
+pub struct UnitSimple<'t, S: MS> {
+    pub system: PhantomData<&'t S>,
     pub ratio: Flt,
     pub offset: Flt,
 }
 
-impl<S: MS> UnitTrait<S> for UnitSimple<S> {
+impl<'t, S: MS> UnitTrait<S> for UnitSimple<'t, S> {
     fn from(&self, val: Flt) -> Measure<S> {
         Measure::new(self, val)
     }

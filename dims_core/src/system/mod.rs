@@ -1,8 +1,10 @@
 mod measure;
+mod unit_format;
 mod unit_simple;
 use crate::unit_creation::{Flt, MeasureSystem as MS};
 
 pub use measure::Measure;
+pub use unit_format::UnitFormat;
 pub use unit_simple::UnitSimple;
 /// The trait used to define a Measurement System
 ///
@@ -38,4 +40,13 @@ pub trait UnitTrait<S: MS> {
     ///
     /// EX: KILOGRAM.to_self(12,000.0) = 12.0
     fn to_self(&self, val: Flt) -> Flt;
+}
+
+#[cfg(not(feature = "no_std"))]
+#[cfg(feature = "str")]
+pub trait UnitFormatTrait<S: MS> {
+    /// Format the given unit as a string with the specified unit suffix abbreviation after it
+    fn as_string_abbr(&self, val: Measure<S>) -> String;
+    /// Format the given unit as a string with the full unit suffix
+    fn as_string_full(&self, val: Measure<S>) -> String;
 }
