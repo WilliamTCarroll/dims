@@ -1,4 +1,5 @@
 use super::*;
+use core::fmt;
 use core::marker::PhantomData;
 /// A Simple Unit in a given MeasureSystem
 ///
@@ -8,7 +9,8 @@ use core::marker::PhantomData;
 ///
 /// `self.to_self = (val / self.ratio) - self.offset`
 ///
-/// If greater flexibility is required, please see `UnitTrait`
+/// If greater flexibility is required, please see `UnitTrait
+#[derive(PartialEq)]
 pub struct UnitSimple<'t, S: MS> {
     pub system: PhantomData<&'t S>,
     pub ratio: Flt,
@@ -24,5 +26,14 @@ impl<'t, S: MS> UnitTrait<S> for UnitSimple<'t, S> {
     }
     fn to_self(&self, val: Flt) -> Flt {
         (val / self.ratio) - self.offset
+    }
+}
+
+impl<'t, S: MS> fmt::Debug for UnitSimple<'t, S> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("UnitSimple")
+            .field("ratio", &self.ratio)
+            .field("offset", &self.offset)
+            .finish()
     }
 }
