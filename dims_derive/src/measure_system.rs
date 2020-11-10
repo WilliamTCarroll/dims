@@ -10,12 +10,12 @@ pub fn impl_measure(ast: &syn::DeriveInput) -> TokenStream {
                 true
             }
         }
-        impl Clone for #name{
+        impl Clone for #name {
             fn clone(&self) -> Self {
                 *self
             }
         }
-        impl Copy for #name{}
+        impl Copy for #name {}
     };
     gen.into()
 }

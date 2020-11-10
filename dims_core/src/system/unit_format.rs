@@ -1,4 +1,5 @@
 use super::*;
+use core::fmt;
 use core::marker::PhantomData;
 /// A Simple Unit in a given MeasureSystem with the info stored for formatting
 ///
@@ -51,5 +52,22 @@ impl<'t, S: MS> UnitFormatTrait<S> for UnitFormat<'t, S> {
         };
 
         format!("{} {}", val, suffix)
+    }
+}
+
+impl<'t, S: MS> fmt::Debug for UnitFormat<'t, S> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("UnitFormat")
+            .field("ratio", &self.ratio)
+            .field("offset", &self.offset)
+            .field("singular", &self.singular)
+            .finish()
+    }
+}
+
+// Only check the ratio and offset; the spelling is of not concern
+impl<'t, S: MS> PartialEq for UnitFormat<'t, S> {
+    fn eq(&self, other: &Self) -> bool {
+        self.ratio == other.ratio && self.offset == other.offset
     }
 }
