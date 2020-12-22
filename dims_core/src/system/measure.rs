@@ -13,8 +13,8 @@ use core::ops::{Add, Div, Mul, Sub};
 #[repr(transparent)]
 #[derive(Copy, Clone, PartialEq)]
 pub struct Measure<S: MS> {
-    system: PhantomData<S>,
-    val: Flt,
+    pub system: PhantomData<S>,
+    pub val: Flt,
 }
 
 impl<S: MS> Measure<S> {
