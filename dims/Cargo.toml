@@ -2,7 +2,7 @@
 name = "dims"
 version = "0.2.0"
 authors = ["william"]
-edition = "2018"
+edition = "2021"
 keywords = ["measurement", "dimension", "unit"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

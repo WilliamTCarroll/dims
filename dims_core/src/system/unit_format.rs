@@ -45,7 +45,7 @@ impl<'t, S: MS> UnitFormatTrait<S> for UnitFormat<'t, S> {
 
     fn as_string_full(&self, val: Measure<S>) -> String {
         let val = val.val_as(self);
-        let suffix = if val == 1.0 {
+        let suffix = if (val - 1.0).abs() < Flt::EPSILON {
             self.singular
         } else {
             self.plural
