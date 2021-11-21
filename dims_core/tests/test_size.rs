@@ -1,23 +1,5 @@
-use dims_core::unit_creation::*;
-static INCH: UnitFormat<Length> = UnitFormat::<Length> {
-    system: PhantomData,
-    offset: 0.0,
-    ratio: 0.0254,
-    abbr: "in",
-    singular: "inch",
-    plural: "inches",
-};
-#[derive(Copy, Clone)]
-struct Length;
-impl MeasureSystem for Length {}
-
-#[derive(Copy, Clone)]
-struct Area;
-impl MeasureSystem for Area {}
-
-#[derive(Copy, Clone)]
-struct Volume;
-impl MeasureSystem for Volume {}
+mod common;
+use common::*;
 
 #[cfg(feature = "f64")]
 const SIZE: usize = 8;

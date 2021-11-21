@@ -1,8 +1,7 @@
 use dims_core::unit_creation::*;
 
-#[derive(Copy, Clone, Debug)]
-struct Length;
-impl MeasureSystem for Length {}
+mod common;
+use common::Length;
 
 type Unit<'t> = UnitFormat<'t, Length>;
 #[test]
