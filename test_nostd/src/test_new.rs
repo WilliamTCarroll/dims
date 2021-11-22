@@ -3,7 +3,7 @@ extern crate dims_core;
 use dims_core::unit_creation::*;
 #[derive(Copy, Clone)]
 struct Length;
-impl MeasureSystem for Length {}
+impl<'t> MeasureSystem<'t> for Length {}
 
 /// Size (in bytes) for each floating point number
 const SIZE: usize = 8;

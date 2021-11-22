@@ -9,7 +9,6 @@ keywords = ["measurement", "dimension", "unit"]
 
 [dependencies]
 
-dims_derive = {path = "../dims_derive"}
 [dependencies.dims_core]
 path = "../dims_core"
 default-features = false
@@ -24,3 +23,4 @@ str = ["dims_core/str","dims_macro/str"]
 f64 = ["dims_core/f64"]
 us = []
 si = []
+debug_us = []

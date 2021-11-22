@@ -1,8 +1,7 @@
 #![no_std]
 // In the event of f64, the numbers are not excessive
 #![allow(clippy::excessive_precision)]
-#[macro_use]
-extern crate dims_derive;
+
 #[macro_use]
 extern crate dims_macro;
 extern crate dims_core;
