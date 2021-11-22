@@ -11,14 +11,14 @@ use core::marker::PhantomData;
 ///
 /// If greater flexibility is required, please see `UnitTrait
 #[derive(PartialEq)]
-pub struct UnitSimple<'t, S: MS> {
+pub struct UnitSimple<'t, S: MS<'t>> {
     pub system: PhantomData<&'t S>,
     pub ratio: Flt,
     pub offset: Flt,
 }
 
-impl<'t, S: MS> UnitTrait<S> for UnitSimple<'t, S> {
-    fn from(&self, val: Flt) -> Measure<S> {
+impl<'t, S: MS<'t>> UnitTrait<'t, S> for UnitSimple<'t, S> {
+    fn from(&self, val: Flt) -> Measure<'t, S> {
         Measure::new(self, val)
     }
     fn to_base(&self, val: Flt) -> Flt {
@@ -29,7 +29,7 @@ impl<'t, S: MS> UnitTrait<S> for UnitSimple<'t, S> {
     }
 }
 
-impl<'t, S: MS> fmt::Debug for UnitSimple<'t, S> {
+impl<'t, S: MS<'t>> fmt::Debug for UnitSimple<'t, S> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("UnitSimple")
             .field("ratio", &self.ratio)
