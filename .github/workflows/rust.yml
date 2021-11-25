@@ -19,10 +19,10 @@ jobs:
     - name: Build
       run: >-
         cargo build --verbose &&
-        cargo build --manifest-path test_nostd/Cargo.toml
+        cargo build --manifest-path test_nostd/Cargo.toml &&
         cargo build --manifest-path test_us/Cargo.toml
     - name: Run tests
       run: >-
         cargo test --verbose &&
-        cargo test --manifest-path test_nostd/Cargo.toml
+        cargo test --manifest-path test_nostd/Cargo.toml &&
         cargo test --manifest-path test_us/Cargo.toml
