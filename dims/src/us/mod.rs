@@ -16,7 +16,7 @@ pub mod volume_wet;
 
 pub use crate::unit_type::UnitType;
 
-mod debug_units {
+pub mod debug_units {
     pub use super::area::SQUARE_INCH as AREA_D;
     pub use super::length::INCH as LENGTH_D;
     pub use super::weight::POUND as MASS_D;

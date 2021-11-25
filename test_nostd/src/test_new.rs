@@ -12,7 +12,7 @@ static INCH: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
-    // The following fields should fail (even though intellisense isn't quite accurate)
+    // The following fields should fail
     // abbr: "in",
     // singular: "inch",
     // plural: "inches",
