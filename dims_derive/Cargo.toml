@@ -1,6 +1,6 @@
 [package]
 name = "dims_derive"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["william"]
 edition = "2021"
 
@@ -10,6 +10,6 @@ edition = "2021"
 proc-macro = true
 
 [dependencies]
-dims_core = {path = "../dims_core"}
+dims_core = {path = "../dims_core", version = "0.2.1"}
 syn = "1.0"
 quote = "1.0"

@@ -1,6 +1,6 @@
 [package]
 name = "dims_macro"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["William <antagonisticapple@gmail.com>"]
 edition = "2021"
 
@@ -12,10 +12,9 @@ paste = "1.0"
 [dev-dependencies]
 rand = "0.7"
 
-dims_derive = {path = "../dims_derive"}
-[dependencies.dims_core]
-path = "../dims_core"
-default-features = false
+dims_derive = { path = "../dims_derive", version = "0.2.1"}
+dims_core   = { path = "../dims_core",   version = "0.2.1", default-features = false} 
+
 
 [features]
 default = ["str"]
