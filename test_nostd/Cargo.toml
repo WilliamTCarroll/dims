@@ -1,8 +1,9 @@
 [package]
 name = "test_nostd"
 version = "0.1.0"
-authors = ["William <antagonisticapple@gmail.com>"]
+authors = ["William Carroll"]
 edition = "2021"
+license = "MIT"
 
 # Empty workspace tag to keep this from polluting the flags in the other packages
 [workspace]

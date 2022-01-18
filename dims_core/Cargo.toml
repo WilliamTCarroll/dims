@@ -1,8 +1,11 @@
 [package]
 name = "dims_core"
 version = "0.2.1"
-authors = ["william"]
+authors = ["William Carroll"]
 edition = "2021"
+license = "MIT"
+description = "Core Utils for Generating Units and Systems"
+repository = "https://github.com/WilliamTCarroll/dims"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
