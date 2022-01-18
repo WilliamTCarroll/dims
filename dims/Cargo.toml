@@ -11,8 +11,8 @@ repository = "https://github.com/WilliamTCarroll/dims"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dims_core   = { path = "../dims_core",   version = "0.3.0", default-features = false} 
-dims_macro  = { path = "../dims_macro",  version = "0.3.0", default-features = false} 
+dims_core   = { path = "../dims_core",  version = "0.3.0", default-features = false} 
+dims_macro  = { path = "../dims_macro", version = "0.3.0", default-features = false} 
 
 [features]
 default = ["us", "si", "str"]

@@ -11,12 +11,10 @@ repository = "https://github.com/WilliamTCarroll/dims"
 
 [dependencies]
 paste = "1.0"
+dims_core   = { path = "../dims_core", version = "0.3.0", default-features = false} 
 
 [dev-dependencies]
 rand = "0.7"
-
-dims_core   = { path = "../dims_core",   version = "0.3.0", default-features = false} 
-
 
 [features]
 default = ["str"]
