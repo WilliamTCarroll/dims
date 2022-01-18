@@ -1,9 +1,12 @@
 [package]
 name = "dims"
 version = "0.2.1"
-authors = ["william"]
+authors = ["William Carroll"]
 edition = "2021"
+license = "MIT"
 keywords = ["measurement", "dimension", "unit"]
+description = "Unit-Aware Types Library"
+repository = "https://github.com/WilliamTCarroll/dims"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
