@@ -34,12 +34,12 @@ let raw = mm.val_as(&INCH);
 ## Usage in functions or structs
 The `dims` crate contains type aliases for each generic measure.  EX:
 ```rust
-pub type Length = Measure<LengthSystem>;
+pub type Length = Measure<'static, LengthSystem>;
 ```
 These are included in the mod `prelude`, or you could import `unit_type`
 ```rust
 use dims::prelude::{Length, Area};
-
+MultiplyBy
 fn do_something(len1: Length, len2: Length) -> Area {
     // ...
 }
@@ -49,26 +49,25 @@ These particular systems are already set up already in `dims`, but you can set u
 ```rust
 use dims_core::unit_creation::*;
 #[macro_use]
-use dims_derive;
+use dims_macro;
 
-// You can derive the required attributes on this struct
-#[derive(MeasureSystem)]
-pub struct LengthSystem;
+// You can use this macro to generate a full system.
+// It requires a length for use as debug.
+measure_system!(name: LengthSystem, debug_unit: FOOT);
 // Allow for conversion between the systems
 // Multiple `MultiplyBy` and `DivideBy` traits can be applied for each `MeasureSystem`
 impl MultiplyBy<LengthSystem> for LengthSystem {
     type Output = AreaSystem;
 }
 
-#[derive(MeasureSystem)]
-pub struct AreaSystem;
+measure_system!(name: LengthSystem, debug_unit: SQUARE_FOOT);
 
 impl DivideBy<LengthSystem> for AreaSystem {
     type Output = LengthSystem;
 }
 
-#[derive(MeasureSystem)]
-pub struct TemperatureSystem;
+measure_system!(name: TemperatureSystem, debug_unit: FAHRENHEIT);
+
 // Set up some units, now
 
 pub const FAHRENHEIT: UnitSimple<TemperatureSystem> = UnitSimple {
@@ -83,6 +82,16 @@ pub const CELCIUS: UnitSimple<TemperatureSystem> = UnitSimple {
     system: PhantomData,
     offset: 273.15,
     ratio: 1.0,
+};
+pub const FOOT: UnitSimple<LengthSystem> = UnitSimple {
+    system: PhantomData,
+    offset: 0.0,
+    ratio: 0.3048,
+};
+pub const SQUARE_FOOT: UnitSimple<AreaSystem> = UnitSimple {
+    system: PhantomData,
+    offset: 0.0,
+    ratio: 0.09290304,
 };
 ```
 
@@ -178,7 +187,7 @@ Selecting `us` in the above options will NOT change the base unit.  It will stil
 - More units
 - More systems
 - More documentation
-- Tests for US units
+- ~Tests for US units~
 - ~~macro to generate SI units from just the base unit~~
 - Generic storage type (allowing any numeric type)
 - Compound units more generic (EX: Mass/Volume for Density)

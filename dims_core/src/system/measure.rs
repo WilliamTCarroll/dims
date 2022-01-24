@@ -1,6 +1,6 @@
 use super::*;
 use core::fmt;
-use {MeasureSystem as MS, MultiplyBy, UnitTrait as UT};
+use {MeasureSystem as MS, UnitTrait as UT};
 
 use core::marker::PhantomData;
 use core::ops::{Add, Div, Mul, Sub};
@@ -28,11 +28,11 @@ impl<'t, S: MS<'t>> Measure<'t, S> {
         }
     }
     /// Convert the stored value to the provided one
-    pub fn val_as<U: UT<'t, S>>(&self, unit: &U) -> Flt {
+    pub fn val_as<U: UT<'t, S>>(self, unit: &U) -> Flt {
         unit.to_self(self.val)
     }
     /// Return the stored value in its base unit
-    pub fn as_base(&self) -> Flt {
+    pub fn as_base(self) -> Flt {
         self.val
     }
 }
@@ -52,8 +52,6 @@ impl<'t, S: MS<'t> + Clone + Copy> fmt::Debug for Measure<'t, S> {
                 .field("as_base", &self.val)
                 .finish()
         }
-        // let unit = S::debug_unit();
-        // let val = unit.as_string_abbr(*self);
     }
 }
 
