@@ -1,6 +1,6 @@
 [package]
 name = "dims_core"
-version = "0.2.1"
+version = "0.3.1"
 authors = ["William Carroll"]
 edition = "2021"
 license = "MIT"

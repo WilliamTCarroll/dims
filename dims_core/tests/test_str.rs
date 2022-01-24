@@ -1,16 +1,5 @@
-use dims_core::unit_creation::*;
-#[derive(Copy, Clone)]
-struct Length;
-impl MeasureSystem for Length {}
-
-static INCH: UnitFormat<Length> = UnitFormat::<Length> {
-    system: PhantomData,
-    offset: 0.0,
-    ratio: 0.0254,
-    abbr: "in",
-    singular: "inch",
-    plural: "inches",
-};
+mod common;
+use common::*;
 
 #[test]
 fn test_str() {

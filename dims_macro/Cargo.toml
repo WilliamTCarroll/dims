@@ -1,6 +1,6 @@
 [package]
 name = "dims_macro"
-version = "0.2.1"
+version = "0.3.1"
 authors = ["William Carroll"]
 edition = "2021"
 license = "MIT"
@@ -11,13 +11,10 @@ repository = "https://github.com/WilliamTCarroll/dims"
 
 [dependencies]
 paste = "1.0"
+dims_core   = { path = "../dims_core", version = "0.3.1", default-features = false} 
 
 [dev-dependencies]
 rand = "0.7"
-
-dims_derive = { path = "../dims_derive", version = "0.2.1"}
-dims_core   = { path = "../dims_core",   version = "0.2.1", default-features = false} 
-
 
 [features]
 default = ["str"]

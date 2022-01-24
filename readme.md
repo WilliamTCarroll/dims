@@ -29,17 +29,17 @@ let this_works = Measure::new(&INCH,0.125);
 // You can grab the stored value as a float via
 let raw = mm.val_as(&INCH);
 // The compiler will not allow you to add between systems:
-// let nope = mass + area; // <= Compiler throws an error
+// let nope = mass + area; // <== Compiler throws an error
 ```
 ## Usage in functions or structs
 The `dims` crate contains type aliases for each generic measure.  EX:
 ```rust
-pub type Length = Measure<LengthSystem>;
+pub type Length = Measure<'static, LengthSystem>;
 ```
 These are included in the mod `prelude`, or you could import `unit_type`
 ```rust
 use dims::prelude::{Length, Area};
-
+MultiplyBy
 fn do_something(len1: Length, len2: Length) -> Area {
     // ...
 }
@@ -49,26 +49,25 @@ These particular systems are already set up already in `dims`, but you can set u
 ```rust
 use dims_core::unit_creation::*;
 #[macro_use]
-use dims_derive;
+use dims_macro;
 
-// You can derive the required attributes on this struct
-#[derive(MeasureSystem)]
-pub struct LengthSystem;
+// You can use this macro to generate a full system.
+// It requires a length for use as debug.
+measure_system!(name: LengthSystem, debug_unit: FOOT);
 // Allow for conversion between the systems
 // Multiple `MultiplyBy` and `DivideBy` traits can be applied for each `MeasureSystem`
 impl MultiplyBy<LengthSystem> for LengthSystem {
     type Output = AreaSystem;
 }
 
-#[derive(MeasureSystem)]
-pub struct AreaSystem;
+measure_system!(name: LengthSystem, debug_unit: SQUARE_FOOT);
 
 impl DivideBy<LengthSystem> for AreaSystem {
     type Output = LengthSystem;
 }
 
-#[derive(MeasureSystem)]
-pub struct TemperatureSystem;
+measure_system!(name: TemperatureSystem, debug_unit: FAHRENHEIT);
+
 // Set up some units, now
 
 pub const FAHRENHEIT: UnitSimple<TemperatureSystem> = UnitSimple {
@@ -83,6 +82,16 @@ pub const CELCIUS: UnitSimple<TemperatureSystem> = UnitSimple {
     system: PhantomData,
     offset: 273.15,
     ratio: 1.0,
+};
+pub const FOOT: UnitSimple<LengthSystem> = UnitSimple {
+    system: PhantomData,
+    offset: 0.0,
+    ratio: 0.3048,
+};
+pub const SQUARE_FOOT: UnitSimple<AreaSystem> = UnitSimple {
+    system: PhantomData,
+    offset: 0.0,
+    ratio: 0.09290304,
 };
 ```
 
@@ -121,21 +130,40 @@ This crate should only be used directly if you want to make your own `Unit` or `
 ## dims_macro
 This contains the `si_unit!` macro, which will generate a whole set (or individual) SI units with the given info.
 TODO: EXAMPLE
-## dims_derive
-This contains the `#[derive(MeasureSystem)]` which allows you to automatically derive the info required for a `MeasureSystem`.
+
+### MeasureSystem macro
+This is used to easily generate a new measuring system with 
+used as:
+```rs
+  measure_system! {name: Mass, debug_unit: GRAM}
+```
+Expands to (with absolute paths):
+```rs
+    #[derive(PartialEq, Eq, Clone, Copy)]
+    pub struct Mass;
+    impl<'t> MeasureSystem<'t> for Mass {
+        #[cfg(feature = "str")]
+        const DEBUG_UNIT: UnitFormat<'t, Self> = GRAM;
+    }
+```
+The `DEBUG_UNIT` is how the value will be displayed when debugging.  This *could* be how you want to display it, but that should be specified explicitly by consuming code.
 ## dims
 This contains a set of pre-made systems and units.  These will be added to as time goes on.
 
-The currently set-up systems are
+The current systems are:
 
-| System      | Base Unit   |
-|-------------|-------------|
-| Length      | Metre       |
-| Area        | Sq Metre    |
-| Volume      | Cubic Metre |
-| Mass        | Gram        |
-| Temperature | Kelvin      |
-|             |             |
+| System      | Base Unit   | debug_us    |
+|-------------|-------------|-------------|
+| Length      | Metre       | Inch        |
+| Area        | Sq Metre    | Square Inch |
+| Volume      | Cubic Metre | Cubic Inch  |
+| Mass        | Gram        | Pound       |
+| Temperature | Kelvin*     | Fahrenheit  |
+
+*Notes on Temperature:
+-  No checking for negative values is performed, as endothermic reactions would have a negative value when applied to the environment. 
+- The debug unit for this is Celcius
+
 # Other Notes
 ## Performance
 There is no measurable impact on **release** performance compared to the stored value (from what my very basic tests can show).  The `Measure` struct is `[repr(transparent)]`, so everything but the value itself is optimized away.  **Debug mode code does have a hit to performance, however.**
@@ -150,12 +178,16 @@ This disables the `UnitFormatTrait` (as the functions return `String`), but can 
   - `plural`: Plural name of the unit (`metres` or `feet`)
 - `si` provides SI/Metric units (on by default)
 - `us` provides us (or 'Merican) units (on by default)
+- `debug_us` will use units as specified in the table above for debugging.
+
+### IMPORTANT
+Selecting `us` in the above options will NOT change the base unit.  It will still be stored in SI.
 
 ## PLANNED FEATURES
 - More units
 - More systems
 - More documentation
-- Tests for US units
+- ~Tests for US units~
 - ~~macro to generate SI units from just the base unit~~
 - Generic storage type (allowing any numeric type)
 - Compound units more generic (EX: Mass/Volume for Density)

@@ -1,64 +1,34 @@
 use dims_core::unit_creation::*;
-#[derive(MeasureSystem)]
-/// LengthSystem measures simple linear units
-///
-/// The base unit for this is the Metre
-///
-/// The following operations are supported (as well as addition and subtraction):
-/// - LengthSystem * LengthSystem = AreaSystem
-/// - LengthSystem * AreaSystem = VolumeSystem
-pub struct LengthSystem;
-impl MultiplyBy<LengthSystem> for LengthSystem {
+
+#[cfg(not(all(feature = "us", feature = "debug_us")))]
+use crate::si::debug_units::*;
+#[cfg(all(feature = "us", feature = "debug_us"))]
+use crate::us::debug_units::*;
+
+measure_system!(name: LengthSystem, debug_unit: LENGTH_D);
+impl<'t> MultiplyBy<'t, LengthSystem> for LengthSystem {
     type Output = AreaSystem;
 }
-impl MultiplyBy<AreaSystem> for LengthSystem {
+impl<'t> MultiplyBy<'t, AreaSystem> for LengthSystem {
     type Output = VolumeSystem;
 }
 
-#[derive(MeasureSystem)]
-/// Unit measures two dimensional LengthSystem
-///
-/// The base unit for this is the Square Metre
-///
-/// The following operations are supported (as well as addition and subtraction):
-/// - LengthSystem * AreaSystem = VolumeSystem
-/// - AreaSystem / LengthSystem = LengthSystem
-pub struct AreaSystem;
-impl MultiplyBy<LengthSystem> for AreaSystem {
+measure_system!(name: AreaSystem, debug_unit: AREA_D);
+impl<'t> MultiplyBy<'t, LengthSystem> for AreaSystem {
     type Output = VolumeSystem;
 }
-impl DivideBy<LengthSystem> for AreaSystem {
+impl<'t> DivideBy<'t, LengthSystem> for AreaSystem {
     type Output = LengthSystem;
 }
 
-#[derive(MeasureSystem)]
-/// VolumeSystem measures three dimensional LengthSystem
-///
-/// The base unit for this is the Cubic Metre
-///
-/// The following operations are supported (as well as addition and subtraction):
-/// - VolumeSystem / LengthSystem = AreaSystem
-/// - VolumeSystem / AreaSystem = LengthSystem
-pub struct VolumeSystem;
-impl DivideBy<LengthSystem> for VolumeSystem {
+measure_system!(name: VolumeSystem, debug_unit: VOLUME_D);
+impl<'t> DivideBy<'t, LengthSystem> for VolumeSystem {
     type Output = AreaSystem;
 }
-impl DivideBy<AreaSystem> for VolumeSystem {
+impl<'t> DivideBy<'t, AreaSystem> for VolumeSystem {
     type Output = LengthSystem;
 }
 
-#[derive(MeasureSystem)]
-/// TemperatureSystem measures what it sounds like.
-///
-/// The base unit is Kelvin
-///
-/// There is no check for negative values,
-/// as something like an endothermic reaction
-/// would subtract from the current temperature
-pub struct TemperatureSystem;
+measure_system!(name: TemperatureSystem, debug_unit: TEMPERATURE_D);
 
-#[derive(MeasureSystem)]
-/// MassSystem measures the amount of matter in an object.
-///
-/// The base unit of this is Gram.
-pub struct MassSystem;
+measure_system!(name: MassSystem, debug_unit: MASS_D);

@@ -1,0 +1,15 @@
+[package]
+name = "test_us"
+version = "0.1.0"
+authors = ["William <antagonisticapple@gmail.com>"]
+edition = "2021"
+
+# Empty workspace tag to keep this from polluting the flags in the other packages
+[workspace]
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+[dependencies.dims]
+path = "../dims"
+features = ["debug_us"]

@@ -1,6 +1,6 @@
 [package]
 name = "dims"
-version = "0.2.1"
+version = "0.3.1"
 authors = ["William Carroll"]
 edition = "2021"
 license = "MIT"
@@ -11,9 +11,8 @@ repository = "https://github.com/WilliamTCarroll/dims"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dims_derive = { path = "../dims_derive", version = "0.2.1"}
-dims_core   = { path = "../dims_core",   version = "0.2.1", default-features = false} 
-dims_macro  = { path = "../dims_macro",  version = "0.2.1", default-features = false} 
+dims_core   = { path = "../dims_core",  version = "0.3.1", default-features = false} 
+dims_macro  = { path = "../dims_macro", version = "0.3.1", default-features = false} 
 
 [features]
 default = ["us", "si", "str"]
@@ -23,3 +22,4 @@ str = ["dims_core/str","dims_macro/str"]
 f64 = ["dims_core/f64"]
 us = []
 si = []
+debug_us = []

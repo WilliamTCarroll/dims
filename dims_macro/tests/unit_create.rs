@@ -1,6 +1,6 @@
 #[macro_use]
 extern crate dims_macro;
-use dims_core::prelude::UnitSimple;
+use dims_core::prelude::UnitFormat;
 use dims_core::unit_creation::*;
 use rand;
 use std::marker::PhantomData;
@@ -16,34 +16,49 @@ impl RoundTo for Flt {
         (self * decimals).round() / decimals
     }
 }
-#[derive(PartialEq, Copy, Clone)]
-pub struct Length;
-impl MeasureSystem for Length {}
-impl MultiplyBy<Length> for Length {
+// #[derive(PartialEq, Copy, Clone)]
+// pub struct Length;
+// impl MeasureSystem for Length {}
+
+measure_system! {name: Length, debug_unit: INCH}
+
+impl<'t> MultiplyBy<'t, Length> for Length {
     type Output = Area;
 }
-#[derive(PartialEq)]
-pub struct Area;
-impl MeasureSystem for Area {}
-impl DivideBy<Length> for Area {
+measure_system! {name: Area, debug_unit: SQINCH}
+
+impl<'t> DivideBy<'t, Length> for Area {
     type Output = Length;
 }
-#[derive(PartialEq)]
-pub struct Mass;
-impl MeasureSystem for Mass {}
-
 si_unit! {system: Length,base: "metre", plural: "metres", abbr: "m"}
 
-static INCH: UnitSimple<Length> = UnitSimple::<Length> {
+const INCH: UnitFormat<Length> = UnitFormat::<Length> {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
+    abbr: "in",
+    singular: "inch",
+    plural: "inches",
+};
+
+const SQINCH: UnitFormat<Area> = UnitFormat::<Area> {
+    system: PhantomData,
+    offset: 0.0,
+    ratio: 0.09290304 / 144.0,
+    #[cfg(feature = "str")]
+    abbr: "in²",
+    #[cfg(feature = "str")]
+    singular: "square inch",
+    #[cfg(feature = "str")]
+    plural: "square inches",
 };
 use KILOMETRE as KM;
 use MILLIMETRE as MM;
 si_unit! {system: Area, prefix: "sq",base: "metre", plural: "metres", abbr:"m²", repeat: 2, ratio: 1.0}
 use SQKILOMETRE as SQKM;
 use SQMILLIMETRE as SQMM;
+
+measure_system! {name: Mass, debug_unit: GRAM}
 si_unit! {system: Mass,base: "gram", plural: "grams", abbr:"g"}
 
 #[test]

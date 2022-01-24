@@ -1,4 +1,13 @@
 //! This module contains a basic set of SI units.
+
+pub mod debug_units {
+    pub use super::area::SQUAREMETRE as AREA_D;
+    pub use super::length::METRE as LENGTH_D;
+    pub use super::mass::GRAM as MASS_D;
+    pub use super::temperature::CELCIUS as TEMPERATURE_D;
+    pub use super::volume::CUBICMETRE as VOLUME_D;
+}
+
 pub mod temperature;
 
 pub mod length {

@@ -3,7 +3,7 @@ extern crate dims_core;
 use dims_core::unit_creation::*;
 #[derive(Copy, Clone)]
 struct Length;
-impl MeasureSystem for Length {}
+impl<'t> MeasureSystem<'t> for Length {}
 
 /// Size (in bytes) for each floating point number
 const SIZE: usize = 8;
@@ -12,7 +12,7 @@ static INCH: UnitSimple<Length> = UnitSimple::<Length> {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
-    // The following fields should fail (even though intellisense isn't quite accurate)
+    // The following fields should fail
     // abbr: "in",
     // singular: "inch",
     // plural: "inches",
