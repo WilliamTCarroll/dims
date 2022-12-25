@@ -104,7 +104,32 @@ fn test_create() {
     assert_eq!(GRAM_I32.from(32_000), KILOGRAM_I32.from(32));
 
     // inch.val_as(&GRAM); // Should not work
+}
 
+#[test]
+fn test_mul_div() {
+    // Try first with the base units
+    let len1 = METRE.from(12.5);
+    let len2 = METRE.from(10.0);
+    let area = len1 * len2;
+    assert_eq!(area.val_as(&SQMETRE).round_to(4), 125.0.round_to(4));
+    let len1 = MM.from(12.5);
+    let len2 = MM.from(10.0);
+    let area = len1 * len2;
+    println!("{:?}", area);
+    // Then below the base
+    assert_eq!(area.val_as(&SQMM).round_to(4), 125.0.round_to(4));
+    let len3 = area / len2;
+    assert_eq!(len3.val_as(&MM).round_to(4), 12.5.round_to(4));
+    // And above
+    let len1 = KM.from(12.5);
+    let len2 = KM.from(10.0);
+    let area = len1 * len2;
+    assert_eq!(area.val_as(&SQKM).round_to(4), 125.0.round_to(4));
+}
+// Uncheck to allow running
+// #[test]
+fn benchmark_creation() {
     // Grab the pair of random numbers to add
     // These ensure:
     // - Same values are tested direct and wrapped
@@ -136,34 +161,11 @@ fn test_create() {
     // Use the output lists so they aren't skipped by the compiler
     println!("{}", list_out1.len());
     println!("{}", list_out2.len());
-    // panic to print output
-    // panic!()
+
     // A word on results:
     // Wrapped time on *Debug* is generally twice as slow as direct
     // Wrapped time on *Release* is fairly exact (sometimes slower, sometimes faster)
     // From what I can tell, there is little to no runtime loss when under release optimizations
-}
-
-#[test]
-fn test_mul_div() {
-    // Try first with the base units
-    let len1 = METRE.from(12.5);
-    let len2 = METRE.from(10.0);
-    let area = len1 * len2;
-    assert_eq!(area.val_as(&SQMETRE).round_to(4), 125.0.round_to(4));
-    let len1 = MM.from(12.5);
-    let len2 = MM.from(10.0);
-    let area = len1 * len2;
-    println!("{:?}", area);
-    // Then below the base
-    assert_eq!(area.val_as(&SQMM).round_to(4), 125.0.round_to(4));
-    let len3 = area / len2;
-    assert_eq!(len3.val_as(&MM).round_to(4), 12.5.round_to(4));
-    // And above
-    let len1 = KM.from(12.5);
-    let len2 = KM.from(10.0);
-    let area = len1 * len2;
-    assert_eq!(area.val_as(&SQKM).round_to(4), 125.0.round_to(4));
 }
 /// Get a list of the specified length
 ///
