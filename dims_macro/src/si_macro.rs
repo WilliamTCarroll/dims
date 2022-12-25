@@ -30,7 +30,7 @@ macro_rules! si_unit {
         system: $system:ty,
         base: $base:literal,
         plural: $plural:literal,
-        abbr: $abbr:literal
+        abbr: $abbr:literal$(,)?
     ) => {
         si_unit!(system: $system, prefix: "", base: $base, plural: $plural, abbr: $abbr, repeat: 1, ratio: 1.0);
     };
@@ -42,7 +42,7 @@ macro_rules! si_unit {
         plural: $plural:literal,
         abbr: $abbr:literal,
         repeat: $repeat:literal,
-        ratio: $ratio:literal
+        ratio: $ratio:literal$(,)?
     ) => {
         one_unit!($prefix, "yotta", $base, $system, 1.0e+24 * $ratio, $repeat,$plural, "Y", $abbr);
         one_unit!($prefix, "zetta", $base, $system, 1.0e+21 * $ratio, $repeat, $plural, "Z", $abbr);

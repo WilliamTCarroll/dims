@@ -1,6 +1,6 @@
 use dims::prelude::*;
 use dims::si::temperature::*;
-use dims::us::temperature::*;
+use dims::us::temperature::{FAHRENHEIT, RANKINE};
 /// Specify a function to round a numeric to the specified number of
 pub trait RoundTo {
     /// Round the given value to the number of decimals specified
@@ -15,18 +15,27 @@ impl RoundTo for Flt {
 #[test]
 fn temperature_test() {
     let zero = KELVIN.from(0.0);
-    assert_eq!(0.0, zero.val_as(&KELVIN));
-    assert_eq!(-273.15, zero.val_as(&CELCIUS));
-    assert_eq!(0.0, zero.val_as(&RANKINE));
-    assert_eq!(-459.67, zero.val_as(&FAHRENHEIT));
+    run(zero, &KELVIN, 0.0);
+    run(zero, &CELCIUS, -273.15);
+    run(zero, &RANKINE, 0.0);
+    run(zero, &FAHRENHEIT, -459.67);
     let freeze = CELCIUS.from(0.0);
-    assert_eq!(273.15, freeze.val_as(&KELVIN));
-    assert_eq!(0.0, freeze.val_as(&CELCIUS));
-    assert_eq!(491.6700, freeze.val_as(&RANKINE).round_to(4)); // Yay floating point errors
-    assert_eq!(32.0000, freeze.val_as(&FAHRENHEIT).round_to(3));
+    run(freeze, &KELVIN, 273.15);
+    run(freeze, &CELCIUS, 0.0);
+    run(freeze, &RANKINE, 491.6700);
+    run(freeze, &FAHRENHEIT, 31.9999);
     let boil = CELCIUS.from(99.9839);
-    assert_eq!(373.1339, boil.val_as(&KELVIN));
-    assert_eq!(99.98390, boil.val_as(&CELCIUS).round_to(4));
-    assert_eq!(671.64102, boil.val_as(&RANKINE));
-    assert_eq!(211.9710, boil.val_as(&FAHRENHEIT).round_to(4));
+    run(boil, &KELVIN, 373.1339);
+    run(boil, &CELCIUS, 99.98390);
+    run(boil, &RANKINE, 671.64102);
+    run(boil, &FAHRENHEIT, 211.9710);
+}
+/// Run the test.\
+/// Splitting serves two purposes:
+/// 1. Keep the output test consistent
+/// 2. Ensure the expected function signature isn't crazy (EX: Generic causing Fun)
+#[track_caller]
+fn run(inp: Temperature, val_as: &TemperatureUnit, exp: Flt) {
+    let out = inp.val_as(val_as);
+    assert_eq!(out.round_to(4), exp, "{out:.10}")
 }

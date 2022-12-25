@@ -16,15 +16,15 @@
 use super::systems::*;
 use dims_core::prelude::Measure;
 
-pub type Length = Measure<'static, LengthSystem>;
+pub type Length = Measure<LengthSystem>;
 
-pub type Area = Measure<'static, AreaSystem>;
+pub type Area = Measure<AreaSystem>;
 
-pub type Volume = Measure<'static, VolumeSystem>;
+pub type Volume = Measure<VolumeSystem>;
 
-pub type Mass = Measure<'static, MassSystem>;
+pub type Mass = Measure<MassSystem>;
 
-pub type Temperature = Measure<'static, TemperatureSystem>;
+pub type Temperature = Measure<TemperatureSystem>;
 
 #[cfg(not(feature = "str"))]
 pub type UnitType<'t, S> = dims_core::unit_creation::UnitSimple<'t, S>;

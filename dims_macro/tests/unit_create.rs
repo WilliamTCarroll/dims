@@ -1,55 +1,58 @@
 #[macro_use]
 extern crate dims_macro;
+use core::marker::PhantomData;
 use dims_core::prelude::UnitFormat;
 use dims_core::unit_creation::*;
 use rand;
-use std::marker::PhantomData;
+use std::hint::black_box;
 
 /// Specify a function to round a numeric to the specified number of
 pub trait RoundTo {
     /// Round the given value to the number of decimals specified
     fn round_to(&self, decimals: i32) -> Self;
 }
-impl RoundTo for Flt {
+impl RoundTo for f32 {
     fn round_to(&self, decimals: i32) -> Self {
-        let decimals: Flt = (10.0 as Flt).powi(decimals);
+        let decimals: f32 = (10.0 as f32).powi(decimals);
         (self * decimals).round() / decimals
     }
 }
-// #[derive(PartialEq, Copy, Clone)]
-// pub struct Length;
-// impl MeasureSystem for Length {}
 
-measure_system! {name: Length, debug_unit: INCH}
+measure_system! {name: Length, debug_unit: INCH,data_type: f32}
 
-impl<'t> MultiplyBy<'t, Length> for Length {
+impl MultiplyBy<Length> for Length {
     type Output = Area;
 }
-measure_system! {name: Area, debug_unit: SQINCH}
+measure_system! {name: Area, debug_unit: SQINCH, data_type: f32}
 
-impl<'t> DivideBy<'t, Length> for Area {
+impl DivideBy<Length> for Area {
     type Output = Length;
 }
 si_unit! {system: Length,base: "metre", plural: "metres", abbr: "m"}
 
-const INCH: UnitFormat<Length> = UnitFormat::<Length> {
-    system: PhantomData,
-    offset: 0.0,
+// const INCH: UnitFormat<Length> = UnitFormat::<Length> {
+//     system: PhantomData,
+//     offset: 0.0,
+//     ratio: 0.0254,
+//     abbr: "in",
+//     singular: "inch",
+//     plural: "inches",
+// };
+one_unit! {
+    name: INCH,
+    system: Length,
     ratio: 0.0254,
     abbr: "in",
     singular: "inch",
     plural: "inches",
-};
+}
 
-const SQINCH: UnitFormat<Area> = UnitFormat::<Area> {
+const SQINCH: UnitFormat<Area> = UnitFormat {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.09290304 / 144.0,
-    #[cfg(feature = "str")]
     abbr: "in²",
-    #[cfg(feature = "str")]
     singular: "square inch",
-    #[cfg(feature = "str")]
     plural: "square inches",
 };
 use KILOMETRE as KM;
@@ -58,9 +61,28 @@ si_unit! {system: Area, prefix: "sq",base: "metre", plural: "metres", abbr:"m²"
 use SQKILOMETRE as SQKM;
 use SQMILLIMETRE as SQMM;
 
-measure_system! {name: Mass, debug_unit: GRAM}
+measure_system! {name: Mass, debug_unit: GRAM, data_type: f32}
 si_unit! {system: Mass,base: "gram", plural: "grams", abbr:"g"}
 
+measure_system! {name: Massi32, debug_unit: GRAM_I32, data_type: i32}
+one_unit! {
+    name: GRAM_I32,
+    system: Massi32,
+    ratio: 1,
+    offset: 0,
+    abbr: "in",
+    singular: "inch",
+    plural: "inches",
+}
+one_unit! {
+    name: KILOGRAM_I32,
+    system: Massi32,
+    ratio: 1000,
+    offset: 0,
+    abbr: "in",
+    singular: "inch",
+    plural: "inches",
+}
 #[test]
 fn test_create() {
     let inch = INCH.from(12.0);
@@ -78,12 +100,16 @@ fn test_create() {
     let zero = &inch - &inch;
     assert_eq!(zero, INCH.from(0.0));
 
+    // Double check the i32
+    assert_eq!(GRAM_I32.from(32_000), KILOGRAM_I32.from(32));
+
     // inch.val_as(&GRAM); // Should not work
 
     // Grab the pair of random numbers to add
     // These ensure:
     // - Same values are tested direct and wrapped
     // - Compiler cannot aggressively optimize static values
+    // This benchmark also utilizes `black_box` added in 1.66 to discourage optimization
     let list = get_rand_list(1000000);
     let mut list_out1 = Vec::new();
     let time_direct = std::time::Instant::now();
@@ -91,6 +117,7 @@ fn test_create() {
     for (num1, num2) in &list {
         let output = num1 + num2;
         list_out1.push(output);
+        black_box(list_out1.as_ptr());
     }
     println!("DIRECT: {:?}", time_direct.elapsed().as_nanos());
 
@@ -103,6 +130,7 @@ fn test_create() {
         let num2 = MM.from(*num2);
         let output = num1 + num2;
         list_out2.push(output);
+        black_box(list_out2.as_ptr());
     }
     println!("WRAPPED:{:?}", time_wrapped.elapsed().as_nanos());
     // Use the output lists so they aren't skipped by the compiler
@@ -140,12 +168,12 @@ fn test_mul_div() {
 /// Get a list of the specified length
 ///
 /// This should help counter aggressive optimization of the compiler
-fn get_rand_list(len: usize) -> Vec<(Flt, Flt)> {
+fn get_rand_list(len: usize) -> Vec<(f32, f32)> {
     let mut out = Vec::with_capacity(len);
 
     for _ in 1..len {
-        let num1 = rand::random::<Flt>() * 100.0;
-        let num2 = rand::random::<Flt>() * 100.0;
+        let num1 = rand::random::<f32>() * 100.0;
+        let num2 = rand::random::<f32>() * 100.0;
         out.push((num1, num2));
     }
     out

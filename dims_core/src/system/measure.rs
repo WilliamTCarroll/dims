@@ -12,15 +12,15 @@ use core::ops::{Add, Div, Mul, Sub};
 /// This is `#[repr(transparent)]`, so when compiled,
 /// the memory footprint is that of the underlying Float
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq)]
-pub struct Measure<'t, S: MS<'t>> {
-    pub system: PhantomData<&'t S>,
-    pub val: Flt,
+#[derive(Copy, Clone, PartialEq, PartialOrd, Default, Hash)]
+pub struct Measure<S: MS> {
+    pub system: PhantomData<S>,
+    pub val: S::N,
 }
 
-impl<'t, S: MS<'t>> Measure<'t, S> {
+impl<S: MS> Measure<S> {
     /// Generate a new Measure from the given unit and val
-    pub fn new<U: UT<'t, S>>(unit: &U, val: Flt) -> Self {
+    pub fn new<U: UT<System = S>>(unit: &U, val: S::N) -> Self {
         let val = unit.to_base(val);
         Self {
             system: PhantomData,
@@ -28,22 +28,22 @@ impl<'t, S: MS<'t>> Measure<'t, S> {
         }
     }
     /// Convert the stored value to the provided one
-    pub fn val_as<U: UT<'t, S>>(self, unit: &U) -> Flt {
+    pub fn val_as<U: UT<System = S>>(self, unit: &U) -> S::N {
         unit.to_self(self.val)
     }
     /// Return the stored value in its base unit
-    pub fn as_base(self) -> Flt {
+    pub fn as_base(self) -> S::N {
         self.val
     }
 }
 
 // Section: External Impls
 
-impl<'t, S: MS<'t> + Clone + Copy> fmt::Debug for Measure<'t, S> {
+impl<S: MS + Clone> fmt::Debug for Measure<S> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         #[cfg(feature = "str")]
         {
-            let val = { S::DEBUG_UNIT.as_string_abbr(*self) };
+            let val = { S::DEBUG_UNIT.as_string_abbr(self.clone()) };
             f.write_str(&val)
         }
         #[cfg(not(feature = "str"))]
@@ -55,7 +55,7 @@ impl<'t, S: MS<'t> + Clone + Copy> fmt::Debug for Measure<'t, S> {
     }
 }
 
-impl<'t, S: MS<'t>> Add for Measure<'t, S> {
+impl<S: MS> Add for Measure<S> {
     type Output = Self;
     fn add(self, other: Self) -> Self {
         Self {
@@ -65,17 +65,17 @@ impl<'t, S: MS<'t>> Add for Measure<'t, S> {
     }
 }
 
-impl<'t, S: MS<'t>> Add for &Measure<'t, S> {
-    type Output = Measure<'t, S>;
-    fn add(self, other: Self) -> Measure<'t, S> {
+impl<S: MS> Add for &Measure<S> {
+    type Output = Measure<S>;
+    fn add(self, other: Self) -> Measure<S> {
         Measure::<S> {
             system: PhantomData,
-            val: self.val + other.val,
+            val: self.val.clone() + &other.val,
         }
     }
 }
 
-impl<'t, S: MS<'t>> Sub for Measure<'t, S> {
+impl<S: MS> Sub for Measure<S> {
     type Output = Self;
     fn sub(self, other: Self) -> Self {
         Self {
@@ -85,29 +85,29 @@ impl<'t, S: MS<'t>> Sub for Measure<'t, S> {
     }
 }
 
-impl<'t, S: MS<'t>> Sub for &Measure<'t, S> {
-    type Output = Measure<'t, S>;
-    fn sub(self, other: Self) -> Measure<'t, S> {
+impl<S: MS> Sub for &Measure<S> {
+    type Output = Measure<S>;
+    fn sub(self, other: Self) -> Measure<S> {
         Measure::<S> {
             system: PhantomData,
-            val: self.val - other.val,
+            val: self.val.clone() - &other.val,
         }
     }
 }
 
 // Section: Conditonal Impls
-impl<'t, OTH: MS<'t>, S: MS<'t> + MultiplyBy<'t, OTH>> Mul<Measure<'t, OTH>> for Measure<'t, S> {
-    type Output = Measure<'t, S::Output>;
-    fn mul(self, other: Measure<'t, OTH>) -> Measure<'t, S::Output> {
+impl<N: NumTrait, OTH: MS<N = N>, S: MS<N = N> + MultiplyBy<OTH>> Mul<Measure<OTH>> for Measure<S> {
+    type Output = Measure<S::Output>;
+    fn mul(self, other: Measure<OTH>) -> Measure<S::Output> {
         Self::Output {
             system: PhantomData,
             val: self.val * other.val,
         }
     }
 }
-impl<'t, OTH: MS<'t>, S: MS<'t> + DivideBy<'t, OTH>> Div<Measure<'t, OTH>> for Measure<'t, S> {
-    type Output = Measure<'t, S::Output>;
-    fn div(self, other: Measure<'t, OTH>) -> Self::Output {
+impl<N: NumTrait, OTH: MS<N = N>, S: MS<N = N> + DivideBy<OTH>> Div<Measure<OTH>> for Measure<S> {
+    type Output = Measure<S::Output>;
+    fn div(self, other: Measure<OTH>) -> Self::Output {
         Self::Output {
             system: PhantomData,
             val: self.val / other.val,
@@ -115,9 +115,9 @@ impl<'t, OTH: MS<'t>, S: MS<'t> + DivideBy<'t, OTH>> Div<Measure<'t, OTH>> for M
     }
 }
 
-impl<'t, S: MS<'t>> Mul<Flt> for Measure<'t, S> {
+impl<N: NumTrait, S: MS<N = N>> Mul<N> for Measure<S> {
     type Output = Self;
-    fn mul(self, other: Flt) -> Self {
+    fn mul(self, other: N) -> Self {
         Self {
             system: PhantomData,
             val: self.val * other,
@@ -125,9 +125,9 @@ impl<'t, S: MS<'t>> Mul<Flt> for Measure<'t, S> {
     }
 }
 
-impl<'t, S: MS<'t>> Div<Flt> for Measure<'t, S> {
+impl<N: NumTrait, S: MS<N = N>> Div<N> for Measure<S> {
     type Output = Self;
-    fn div(self, other: Flt) -> Self {
+    fn div(self, other: N) -> Self {
         Self {
             system: PhantomData,
             val: self.val / other,

@@ -4,6 +4,8 @@ This collection of crates are used to set up type-safe measurements.
 
 This will allow for storing values like distance or mass, as well as preventing adding grams to feet.
 
+The intent is for these values to be kept in-memory as `Mass` or `Length`, without having to worry about the unit except for creation of the value, and when accessing it (for display, storage, etc).
+
 ## IMPORTANT
 
 This is still a Work-In-Progress. Expect rough-edges, but I am working to smooth them out.
@@ -65,20 +67,20 @@ use dims_macro;
 
 // You can use this macro to generate a full system.
 // It requires a length for use as debug.
-measure_system!(name: LengthSystem, debug_unit: FOOT);
+measure_system!(name: LengthSystem, debug_unit: FOOT),data_type: f32;
 // Allow for conversion between the systems
 // Multiple `MultiplyBy` and `DivideBy` traits can be applied for each `MeasureSystem`
 impl MultiplyBy<LengthSystem> for LengthSystem {
     type Output = AreaSystem;
 }
 
-measure_system!(name: LengthSystem, debug_unit: SQUARE_FOOT);
+measure_system!(name: LengthSystem, debug_unit: SQUARE_FOOT),data_type: f32;
 
 impl DivideBy<LengthSystem> for AreaSystem {
     type Output = LengthSystem;
 }
 
-measure_system!(name: TemperatureSystem, debug_unit: FAHRENHEIT);
+measure_system!(name: TemperatureSystem, debug_unit: FAHRENHEIT),data_type: f32;
 
 // Set up some units, now
 
@@ -128,9 +130,10 @@ This allows for basic units with the same zero (most of them), as well as those 
 
 ---
 
-The core components used to build a set of units.\
-No actual units (or even measurement systems) are stored, here.\
-This crate should only be used directly if you want to make your own `Unit` or `MeasureSystem`
+- The core components used to build a set of units.
+- No actual units (or even measurement systems) are stored, here.
+- This crate should only be used directly if you want to make your own `Unit` or `MeasureSystem`.
+- The stored value is not specified, but left generic. The most common options would likely be `f32` and `f64` (as used in the `dims` crate, here), but this is left generic.
 
 ### Base Structs and Traits
 
@@ -146,10 +149,20 @@ This crate should only be used directly if you want to make your own `Unit` or `
   - `Length` \* `Length` = `Area`
   - `Length` \* `Area` = `Volume`
   - `Volume` / `Area` = `Length`
+- You can also multiply and divide by the stored datatype. EX:
+
+```rust
+    let len = MM.from(8.0);
+    let two = len * 2.0;
+    let one = two / 2.0;
+```
 
 ## dims_macro
 
+---
+
 This contains the `si_unit!` macro, which will generate a whole set (or individual) SI units with the given info.
+
 TODO: EXAMPLE
 
 ### MeasureSystem macro
@@ -158,23 +171,26 @@ This is used to easily generate a new measuring system with
 used as:
 
 ```rs
-  measure_system! {name: Mass, debug_unit: GRAM}
+  measure_system! {name: Mass, debug_unit: GRAM, data_type: f32}
 ```
 
 Expands to (with absolute paths):
 
 ```rs
-    #[derive(PartialEq, Eq, Clone, Copy)]
-    pub struct Mass;
-    impl<'t> MeasureSystem<'t> for Mass {
-        #[cfg(feature = "str")]
-        const DEBUG_UNIT: UnitFormat<'t, Self> = GRAM;
-    }
+#[derive(PartialEq, Eq, Clone, Copy)]
+pub struct Mass;
+impl MeasureSystem for Mass {
+    type N = f32;
+    #[cfg(feature = "str")]
+    const DEBUG_UNIT: UnitFormat<'static, Self> = GRAM;
+}
 ```
 
 The `DEBUG_UNIT` is how the value will be displayed when debugging. This _could_ be how you want to display it, but that should be specified explicitly by consuming code.
 
 ## dims
+
+---
 
 This contains a set of pre-made systems and units. These will be added to as time goes on.
 
@@ -201,30 +217,30 @@ There is no measurable impact on **release** performance compared to the stored 
 
 ## Crate options for `dims` and `dims_core`
 
-- `f64` is available as an option; `f32` is the default
-- `no_std` will set the crates to `no_std` (go figure).\
-  This disables the `UnitFormatTrait` (as the functions return `String`), but can still be used with `str` (see below) to store the unit name info.
+- `std` is the default option, and defaults to using the standard library.\
+  This enables the `UnitFormatTrait` (as the functions return `String`), but `no_std` can still be used with `str` (see below) to store the unit name info.
 
 ## Crate options for `dims`
 
+- `f64` is available as an option; `f32` is the default
 - `str` (default) will utilize `UnitFormat` and store:
   - `abbr`: Abbreviated unit name (`m` or `ft`)
   - `singular`: Singular name of a unit (`metre` or `foot`)
   - `plural`: Plural name of the unit (`metres` or `feet`)
 - `si` provides SI/Metric units (on by default)
-- `us` provides us (or 'Merican) units (on by default)
+- `us` provides US (or 'Merican) units (on by default)
 - `debug_us` will use units as specified in the table above for debugging.
 
 ### IMPORTANT
 
-Selecting `us` in the above options will NOT change the base unit. It will still be stored in SI.
+Selecting `us` or `debug_us` in the above options will NOT change the base unit. It will still be stored in SI.
 
 ## PLANNED FEATURES
 
 - More units
 - More systems
 - More documentation
-- ~Tests for US units~
+- ~~Tests for US units~~
 - ~~macro to generate SI units from just the base unit~~
-- Generic storage type (allowing any numeric type)
+- ~~Generic storage type (allowing any numeric type)~~
 - Compound units more generic (EX: Mass/Volume for Density)
