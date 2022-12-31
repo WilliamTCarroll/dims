@@ -1,6 +1,3 @@
-#![cfg_attr(feature = "no_std", no_std)]
-mod float;
-pub use float::Flt;
 mod system;
 /// ## prelude
 ///
@@ -8,11 +5,10 @@ mod system;
 ///
 /// This and the `unit_creation` module have overlapping contents, so you only need to import one
 pub mod prelude {
-    #[cfg(not(feature = "no_std"))]
+    #[cfg(feature = "std")]
     #[cfg(feature = "str")]
     pub use super::system::UnitFormatTrait;
     pub use super::system::{Measure, UnitFormat, UnitSimple, UnitTrait};
-    pub use super::Flt;
     pub use core::marker::PhantomData;
 }
 /// ## unit_creation
@@ -26,11 +22,11 @@ pub mod prelude {
 ///
 /// This and the `prelude` module have overlapping contents, so you only need to import one
 pub mod unit_creation {
-    #[cfg(not(feature = "no_std"))]
+    #[cfg(feature = "std")]
     pub use super::system::UnitFormatTrait;
     pub use super::system::{
         DivideBy, Measure, MeasureSystem, MultiplyBy, UnitFormat, UnitSimple, UnitTrait,
     };
-    pub use super::Flt;
     pub use core::marker::PhantomData;
+    pub use num_traits;
 }

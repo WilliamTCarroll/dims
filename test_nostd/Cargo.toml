@@ -14,9 +14,9 @@ license = "MIT"
 [dependencies.dims_core]
 path = "../dims_core"
 default-features = false
-features = ["no_std", "f64"]
+features = []
 
 [dependencies.dims]
 path = "../dims"
 default-features = false
-features = ["no_std", "si", "us", "f64"]
+features = [ "si", "us", "f64"]

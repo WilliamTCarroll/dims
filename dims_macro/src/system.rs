@@ -1,11 +1,12 @@
 #[macro_export]
 macro_rules! measure_system {
-    (name: $name:ident, debug_unit:$debug:ident) => {
+    (name: $name:ident, debug_unit: $debug:ident, data_type: $data_type:ty $(,)?) => {
         #[derive(PartialEq, Eq, Clone, Copy)]
         pub struct $name;
-        impl<'t> dims_core::unit_creation::MeasureSystem<'t> for $name {
+        impl dims_core::unit_creation::MeasureSystem for $name {
+            type N = $data_type;
             #[cfg(feature = "str")]
-            const DEBUG_UNIT: dims_core::unit_creation::UnitFormat<'t, Self> = $debug;
+            const DEBUG_UNIT: dims_core::unit_creation::UnitFormat<'static, Self> = $debug;
         }
     };
 }

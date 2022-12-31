@@ -11,6 +11,9 @@ pub mod si;
 #[cfg(feature = "us")]
 pub mod us;
 
+mod float;
+pub use float::Flt;
+
 pub mod unit_type;
 
 pub mod prelude {
@@ -18,6 +21,8 @@ pub mod prelude {
     pub use dims_core::prelude::*;
     // Re-export unit_type mod
     pub use crate::unit_type::*;
+    // Re-export the float
+    pub use crate::Flt;
 }
 
 pub mod systems;

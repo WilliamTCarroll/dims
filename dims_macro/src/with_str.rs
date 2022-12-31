@@ -1,5 +1,42 @@
 #[cfg_attr(feature = "str", macro_export)]
 macro_rules! one_unit {
+    (
+        name: $name:ident,
+        system: $system:ty,
+        ratio: $ratio:expr,
+        offset: $offset:expr,
+        abbr: $abbr: literal,
+        singular: $singular: literal,
+        plural: $plural: literal$(,)?
+    ) => {
+        pub const $name: dims_core::unit_creation::UnitFormat<$system> =
+            dims_core::unit_creation::UnitFormat::<$system> {
+                system: dims_core::unit_creation::PhantomData,
+                ratio: $ratio,
+                offset: $offset,
+                abbr: $abbr,
+                singular: $singular,
+                plural: $singular,
+            };
+    };
+    (
+        name: $name:ident,
+        system: $system:ty,
+        ratio: $ratio:expr,
+        abbr: $abbr: literal,
+        singular: $singular: literal,
+        plural: $plural: literal$(,)?
+    ) => {
+        one_unit! {
+        name: $name,
+        system: $system,
+        ratio: $ratio,
+        offset: 0.0,
+        abbr: $abbr,
+        singular: $singular,
+        plural: $plural
+    }
+    };
     // Set up an individual SI unit with the given info
     (
         $prefix:literal,

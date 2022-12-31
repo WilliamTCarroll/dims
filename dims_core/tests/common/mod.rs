@@ -1,6 +1,6 @@
 pub use dims_core::unit_creation::*;
 
-pub const INCH: UnitFormat<Length> = UnitFormat::<Length> {
+pub const INCH: UnitFormat<'static, Length> = UnitFormat {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
@@ -10,16 +10,18 @@ pub const INCH: UnitFormat<Length> = UnitFormat::<Length> {
 };
 #[derive(Copy, Clone, PartialEq)]
 pub struct Length;
-impl<'t> MeasureSystem<'t> for Length {
-    const DEBUG_UNIT: UnitFormat<'t, Self> = INCH;
+impl MeasureSystem for Length {
+    type N = f32;
+    const DEBUG_UNIT: UnitFormat<'static, Self> = INCH;
 }
 
 #[derive(Copy, Clone, PartialEq)]
 pub struct Area;
-impl<'t> MeasureSystem<'t> for Area {
-    const DEBUG_UNIT: UnitFormat<'t, Self> = SQIN;
+impl MeasureSystem for Area {
+    type N = f32;
+    const DEBUG_UNIT: UnitFormat<'static, Self> = SQIN;
 }
-pub const SQIN: UnitFormat<Area> = UnitFormat::<Area> {
+pub const SQIN: UnitFormat<'static, Area> = UnitFormat {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.09290304 / 144.0,
@@ -30,7 +32,7 @@ pub const SQIN: UnitFormat<Area> = UnitFormat::<Area> {
     #[cfg(feature = "str")]
     plural: "square inches",
 };
-pub const SQFT: UnitFormat<Area> = UnitFormat::<Area> {
+pub const SQFT: UnitFormat<'static, Area> = UnitFormat {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.09290304,
@@ -44,11 +46,12 @@ pub const SQFT: UnitFormat<Area> = UnitFormat::<Area> {
 
 #[derive(Copy, Clone, PartialEq)]
 pub struct Volume;
-impl<'t> MeasureSystem<'t> for Volume {
-    const DEBUG_UNIT: UnitFormat<'t, Self> = CBIN;
+impl MeasureSystem for Volume {
+    type N = f32;
+    const DEBUG_UNIT: UnitFormat<'static, Self> = CBIN;
 }
 
-pub const CBIN: UnitFormat<Volume> = UnitFormat::<Volume> {
+pub const CBIN: UnitFormat<'static, Volume> = UnitFormat::<'static, Volume> {
     system: PhantomData,
     offset: 0.0,
     ratio: 0.764554857984 / 144.0 / 1728.0,
