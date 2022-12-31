@@ -21,6 +21,14 @@ impl MeasureSystem for Area {
     type N = f32;
     const DEBUG_UNIT: UnitFormat<'static, Self> = SQIN;
 }
+
+impl MultiplyBy<Length> for Length {
+    type Output = Area;
+}
+
+impl DivideBy<Length> for Area {
+    type Output = Length;
+}
 pub const SQIN: UnitFormat<'static, Area> = UnitFormat {
     system: PhantomData,
     offset: 0.0,
@@ -51,10 +59,17 @@ impl MeasureSystem for Volume {
     const DEBUG_UNIT: UnitFormat<'static, Self> = CBIN;
 }
 
+impl MultiplyBy<Length> for Area {
+    type Output = Volume;
+}
+
+impl DivideBy<Length> for Volume {
+    type Output = Area;
+}
 pub const CBIN: UnitFormat<'static, Volume> = UnitFormat::<'static, Volume> {
     system: PhantomData,
     offset: 0.0,
-    ratio: 0.764554857984 / 144.0 / 1728.0,
+    ratio: 0.764554857984 / 27.0 / 1728.0,
     #[cfg(feature = "str")]
     abbr: "in³",
     #[cfg(feature = "str")]

@@ -1,6 +1,4 @@
-extern crate dims_core;
-
-use dims_core::unit_creation::*;
+use dims::dims_core::unit_creation::*;
 #[derive(Copy, Clone)]
 struct Length;
 impl MeasureSystem for Length {
