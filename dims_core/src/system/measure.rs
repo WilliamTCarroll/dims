@@ -3,7 +3,7 @@ use core::fmt;
 use {MeasureSystem as MS, UnitTrait as UT};
 
 use core::marker::PhantomData;
-use core::ops::{Add, AddAssign, Div, Mul, Sub, SubAssign};
+use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 /// Measure is a wrapped Measurement of a specific System.
 ///
@@ -12,7 +12,7 @@ use core::ops::{Add, AddAssign, Div, Mul, Sub, SubAssign};
 /// This is `#[repr(transparent)]`, so when compiled,
 /// the memory footprint is that of the underlying Float
 #[repr(transparent)]
-#[derive(Copy, Clone, PartialEq, PartialOrd, Default, Hash)]
+#[derive(Copy, Clone, PartialEq, PartialOrd, Default)]
 pub struct Measure<S: MS> {
     pub system: PhantomData<S>,
     pub val: S::N,
@@ -68,6 +68,11 @@ fn mul<N: NumTrait, S: MS<N = N>>(self: Measure<S>, other: N) -> Measure<S> {
         val: self.val.clone() * other.clone(),
     }
 }
+#[opimps::impl_op_assign(MulAssign)]
+fn mul_assign<N: NumTrait, S: MS<N = N>>(self: Measure<S>, other: N) {
+    self.val = self.val.clone() * other;
+}
+
 #[opimps::impl_ops_rprim(Div)]
 fn div<N: NumTrait, S: MS<N = N>>(self: Measure<S>, other: N) -> Measure<S> {
     Measure {
@@ -75,7 +80,10 @@ fn div<N: NumTrait, S: MS<N = N>>(self: Measure<S>, other: N) -> Measure<S> {
         val: self.val.clone() / other.clone(),
     }
 }
-
+#[opimps::impl_op_assign(DivAssign)]
+fn div_assign<N: NumTrait, S: MS<N = N>>(self: Measure<S>, other: N) {
+    self.val = self.val.clone() * other;
+}
 // Section: Conditonal Impls
 
 #[opimps::impl_ops(Mul)]
@@ -99,6 +107,16 @@ where
     Measure {
         system: PhantomData,
         val: self.val.clone() / other.val.clone(),
+    }
+}
+
+impl<N: NumTrait + Neg<Output = N>, S: MS<N = N>> Neg for Measure<S> {
+    type Output = Self;
+    fn neg(self) -> Self::Output {
+        Self {
+            system: PhantomData,
+            val: -self.val,
+        }
     }
 }
 
