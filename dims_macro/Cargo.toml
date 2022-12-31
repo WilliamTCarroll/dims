@@ -1,17 +1,18 @@
 [package]
 name = "dims_macro"
-version = "0.4.0"
+version = "0.4.1"
 authors = ["William Carroll"]
 edition = "2021"
 license = "MIT"
 description = "Macros for Generating Systems of Units"
 repository = "https://github.com/WilliamTCarroll/dims"
+readme = "readme.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 paste = "1.0"
-dims_core   = { path = "../dims_core", version = "0.4.0", default-features = false} 
+dims_core   = { path = "../dims_core", version = "0.4.1", default-features = false} 
 
 [dev-dependencies]
 rand = "0.7"
