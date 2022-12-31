@@ -4,7 +4,6 @@ use core::marker::PhantomData;
 use dims_core::prelude::UnitFormat;
 use dims_core::unit_creation::*;
 use rand;
-use std::hint::black_box;
 
 /// Specify a function to round a numeric to the specified number of
 pub trait RoundTo {
@@ -142,7 +141,7 @@ fn benchmark_creation() {
     for (num1, num2) in &list {
         let output = num1 + num2;
         list_out1.push(output);
-        black_box(list_out1.as_ptr());
+        // std::hint::black_box::black_box(list_out1.as_ptr());
     }
     println!("DIRECT: {:?}", time_direct.elapsed().as_nanos());
 
@@ -155,7 +154,7 @@ fn benchmark_creation() {
         let num2 = MM.from(*num2);
         let output = num1 + num2;
         list_out2.push(output);
-        black_box(list_out2.as_ptr());
+        // std::hint::black_box::black_box(list_out2.as_ptr());
     }
     println!("WRAPPED:{:?}", time_wrapped.elapsed().as_nanos());
     // Use the output lists so they aren't skipped by the compiler
