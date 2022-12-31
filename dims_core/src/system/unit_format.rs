@@ -30,10 +30,10 @@ impl<'t, S: MS> UnitTrait for UnitFormat<'t, S> {
         Measure::new(self, val)
     }
     fn to_base(&self, val: S::N) -> S::N {
-        (val + &self.offset) * &self.ratio
+        (val + self.offset.clone()) * self.ratio.clone()
     }
     fn to_self(&self, val: S::N) -> S::N {
-        (val / &self.ratio) - &self.offset
+        (val / self.ratio.clone()) - self.offset.clone()
     }
 }
 

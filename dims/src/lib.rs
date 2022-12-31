@@ -4,7 +4,8 @@
 
 #[macro_use]
 extern crate dims_macro;
-extern crate dims_core;
+// Re-Export this for potential use using custom units
+pub extern crate dims_core;
 
 #[cfg(feature = "si")]
 pub mod si;

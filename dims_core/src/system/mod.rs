@@ -7,15 +7,17 @@ use core::fmt::Display;
 use crate::unit_creation::MeasureSystem as MS;
 
 pub use measure::Measure;
-use num_traits::{Num, NumOps, NumRef, One, Zero};
+use num_traits::{NumOps, One};
 pub use unit_format::UnitFormat;
 pub use unit_simple::UnitSimple;
 /// The trait used to define a Measurement System
 ///
-/// This is currently entirely blank; it is just used as PhantomData
+/// This defines two items for a given measure:
+/// 1. What underlying Datatype is used (EX: f32, f64, etc)
+/// 2. What unit should be used for debugging (only if the feature `str` is used)
 pub trait MeasureSystem
 where
-    Self: Sized,
+    Self: Sized + PartialEq + PartialOrd,
 {
     type N: NumTrait;
     #[cfg(feature = "str")]
@@ -23,8 +25,8 @@ where
 }
 
 /// A generic super trait of required traits
-pub trait NumTrait: Num + One + Zero + NumOps + NumRef + Clone + Debug + Display {}
-impl<U> NumTrait for U where U: Num + One + Zero + NumOps + NumRef + Clone + Debug + Display {}
+pub trait NumTrait: PartialEq + One + NumOps + Clone + Debug + Display {}
+impl<U> NumTrait for U where U: PartialEq + One + NumOps + Clone + Debug + Display {}
 
 /// Allows this MeasureSystem to transform into another via multiplication
 ///

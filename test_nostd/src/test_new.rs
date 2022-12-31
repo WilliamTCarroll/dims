@@ -1,7 +1,5 @@
-extern crate dims_core;
-
-use dims_core::unit_creation::*;
-#[derive(Copy, Clone)]
+use dims::dims_core::unit_creation::*;
+#[derive(Copy, Clone, PartialEq, PartialOrd)]
 struct Length;
 impl MeasureSystem for Length {
     type N = f64;
