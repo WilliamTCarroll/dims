@@ -1,5 +1,5 @@
 use dims::dims_core::unit_creation::*;
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, PartialEq, PartialOrd)]
 struct Length;
 impl MeasureSystem for Length {
     type N = f64;
