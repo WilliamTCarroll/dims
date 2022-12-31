@@ -8,14 +8,14 @@ pub const INCH: UnitFormat<'static, Length> = UnitFormat {
     singular: "inch",
     plural: "inches",
 };
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, PartialOrd)]
 pub struct Length;
 impl MeasureSystem for Length {
     type N = f32;
     const DEBUG_UNIT: UnitFormat<'static, Self> = INCH;
 }
 
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, PartialOrd)]
 pub struct Area;
 impl MeasureSystem for Area {
     type N = f32;
@@ -52,7 +52,7 @@ pub const SQFT: UnitFormat<'static, Area> = UnitFormat {
     plural: "square feet",
 };
 
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, PartialOrd)]
 pub struct Volume;
 impl MeasureSystem for Volume {
     type N = f32;

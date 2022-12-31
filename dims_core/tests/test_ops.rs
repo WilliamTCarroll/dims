@@ -49,6 +49,16 @@ fn test_add_sub() {
     eq(INCH.from(16.0), len4);
     eq(INCH.from(-16.0), -len4);
 }
+#[test]
+fn test_ord() {
+    assert!(INCH.from(2.0) < INCH.from(9.0));
+    assert!(INCH.from(2.0) > -INCH.from(9.0));
+    // Just for the sake of my own sanity, check ordering in a vec
+    let mut inp = vec![INCH.from(2.0), INCH.from(1.0), INCH.from(3.0)];
+    let exp = vec![INCH.from(1.0), INCH.from(2.0), INCH.from(3.0)];
+    inp.sort_by(|one, two| one.partial_cmp(two).unwrap_or(core::cmp::Ordering::Equal));
+    assert_eq!(inp, exp);
+}
 #[track_caller]
 fn eq<M: MeasureSystem<N = f32> + Clone + Copy>(one: Measure<M>, two: Measure<M>) {
     assert!(
