@@ -1,6 +1,6 @@
 [package]
 name = "dims_macro"
-version = "0.4.1"
+version = "0.4.2"
 authors = ["William Carroll"]
 edition = "2021"
 license = "MIT"
@@ -12,13 +12,13 @@ readme = "readme.md"
 
 [dependencies]
 paste = "1.0"
-dims_core   = { path = "../dims_core", version = "0.4.1", default-features = false} 
+dims_core = { path = "../dims_core", version = "0.4.2", default-features = false }
 
 [dev-dependencies]
 rand = "0.7"
 
 [features]
-default = ["str","std"]
+default = ["str", "std"]
 # Pass each of these along to core
 std = ["dims_core/std"]
 str = ["dims_core/str"]

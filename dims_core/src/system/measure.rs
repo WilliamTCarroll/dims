@@ -82,7 +82,7 @@ fn div<N: NumTrait, S: MS<N = N>>(self: Measure<S>, other: N) -> Measure<S> {
 }
 #[opimps::impl_op_assign(DivAssign)]
 fn div_assign<N: NumTrait, S: MS<N = N>>(self: Measure<S>, other: N) {
-    self.val = self.val.clone() * other;
+    self.val = self.val.clone() / other;
 }
 // Section: Conditonal Impls
 

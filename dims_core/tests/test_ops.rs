@@ -7,8 +7,9 @@ fn test_mul() {
     let out = inp * 2.0;
     let exp = INCH.from(4.0);
     assert_eq!(out, exp);
-    let inp = INCH.from(6.0);
-    let out = inp * -1.0;
+    // Try both the multiply = and a negative
+    let mut out = INCH.from(6.0);
+    out *= -1.0;
     let exp = INCH.from(-6.0);
     assert_eq!(out, exp);
 }
@@ -17,6 +18,9 @@ fn test_div() {
     let inp = INCH.from(2.0);
     let out = inp / 2.0;
     let exp = INCH.from(1.0);
+    assert_eq!(out, exp);
+    let mut out = inp;
+    out /= 2.0;
     assert_eq!(out, exp);
 }
 #[test]
