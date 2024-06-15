@@ -2,7 +2,6 @@ use super::*;
 use core::fmt;
 use {MeasureSystem as MS, UnitTrait as UT};
 
-use core::marker::PhantomData;
 use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 /// Measure is a wrapped Measurement of a specific System.
@@ -14,7 +13,6 @@ use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAss
 #[repr(transparent)]
 #[derive(Copy, Clone, PartialEq, PartialOrd, Default)]
 pub struct Measure<S: MS> {
-    pub system: PhantomData<S>,
     pub val: S::N,
 }
 
@@ -22,10 +20,7 @@ impl<S: MS> Measure<S> {
     /// Generate a new Measure from the given unit and val
     pub fn new<U: UT<System = S>>(unit: &U, val: S::N) -> Self {
         let val = unit.to_base(val);
-        Self {
-            system: PhantomData,
-            val,
-        }
+        Self { val }
     }
     /// Convert the stored value to the provided one
     pub fn val_as<U: UT<System = S>>(self, unit: &U) -> S::N {
@@ -41,7 +36,6 @@ impl<S: MS> Measure<S> {
 #[opimps::impl_ops(Add)]
 fn add<S: MS>(self: Measure<S>, two: Measure<S>) -> Measure<S> {
     Measure {
-        system: PhantomData,
         val: self.val.clone() + two.val.clone(),
     }
 }
@@ -52,7 +46,6 @@ fn add_assign<S: MS>(self: Measure<S>, two: Measure<S>) {
 #[opimps::impl_ops(Sub)]
 fn sub<S: MS>(self: Measure<S>, two: Measure<S>) -> Measure<S> {
     Measure {
-        system: PhantomData,
         val: self.val.clone() - two.val.clone(),
     }
 }
@@ -64,7 +57,6 @@ fn sub_assign<S: MS>(self: Measure<S>, two: Measure<S>) {
 #[opimps::impl_ops_rprim(Mul)]
 fn mul<N: NumTrait, S: MS<N = N>>(self: Measure<S>, other: N) -> Measure<S> {
     Measure {
-        system: PhantomData,
         val: self.val.clone() * other.clone(),
     }
 }
@@ -76,7 +68,6 @@ fn mul_assign<N: NumTrait, S: MS<N = N>>(self: Measure<S>, other: N) {
 #[opimps::impl_ops_rprim(Div)]
 fn div<N: NumTrait, S: MS<N = N>>(self: Measure<S>, other: N) -> Measure<S> {
     Measure {
-        system: PhantomData,
         val: self.val.clone() / other.clone(),
     }
 }
@@ -93,7 +84,6 @@ where
     S2: MS<N = N>,
 {
     Measure {
-        system: PhantomData,
         val: self.val.clone() * other.val.clone(),
     }
 }
@@ -105,7 +95,6 @@ where
     S2: MS<N = N>,
 {
     Measure {
-        system: PhantomData,
         val: self.val.clone() / other.val.clone(),
     }
 }
@@ -113,10 +102,7 @@ where
 impl<N: NumTrait + Neg<Output = N>, S: MS<N = N>> Neg for Measure<S> {
     type Output = Self;
     fn neg(self) -> Self::Output {
-        Self {
-            system: PhantomData,
-            val: -self.val,
-        }
+        Self { val: -self.val }
     }
 }
 

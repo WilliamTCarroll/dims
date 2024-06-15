@@ -1,10 +1,8 @@
 //! Units of area that are generally used in surveying.
 //! The ACRE is re-exported in the general `area` mod
 pub use super::area::AreaUnit;
-use dims_core::unit_creation::*;
 
 pub const SQUARE_FOOT_SURVEY: AreaUnit = AreaUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: 1_440_000.0 / 15_499_969.0,
     #[cfg(feature = "str")]
@@ -16,7 +14,6 @@ pub const SQUARE_FOOT_SURVEY: AreaUnit = AreaUnit {
 };
 
 pub const SQUARE_ROD: AreaUnit = AreaUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: SQUARE_CHAIN.ratio / 16.0,
     #[cfg(feature = "str")]
@@ -28,7 +25,6 @@ pub const SQUARE_ROD: AreaUnit = AreaUnit {
 };
 
 pub const SQUARE_CHAIN: AreaUnit = AreaUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: SQUARE_FOOT_SURVEY.ratio * 4356.0,
     #[cfg(feature = "str")]
@@ -40,7 +36,6 @@ pub const SQUARE_CHAIN: AreaUnit = AreaUnit {
 };
 
 pub const ACRE: AreaUnit = AreaUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: SQUARE_CHAIN.ratio * 10.0,
     #[cfg(feature = "str")]
@@ -52,7 +47,6 @@ pub const ACRE: AreaUnit = AreaUnit {
 };
 
 pub const SECTION: AreaUnit = AreaUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: ACRE.ratio * 640.0,
     #[cfg(feature = "str")]
@@ -64,7 +58,6 @@ pub const SECTION: AreaUnit = AreaUnit {
 };
 
 pub const SQUARE_LEAGUE: AreaUnit = AreaUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: SECTION.ratio * 9.0,
     #[cfg(feature = "str")]
@@ -76,7 +69,6 @@ pub const SQUARE_LEAGUE: AreaUnit = AreaUnit {
 };
 
 pub const SURVEY_TOWNSHIP: AreaUnit = AreaUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: SECTION.ratio * 36.0,
     #[cfg(feature = "str")]
@@ -89,6 +81,7 @@ pub const SURVEY_TOWNSHIP: AreaUnit = AreaUnit {
 #[cfg(test)]
 mod test {
     use super::*;
+    use dims_core::unit_creation::*;
     #[test]
     fn test_area_survey() {
         assert_eq!(SQUARE_FOOT_SURVEY.from(1.0).as_base(), 0.09290341);

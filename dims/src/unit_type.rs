@@ -27,6 +27,6 @@ pub type Mass = Measure<MassSystem>;
 pub type Temperature = Measure<TemperatureSystem>;
 
 #[cfg(not(feature = "str"))]
-pub type UnitType<'t, S> = dims_core::unit_creation::UnitSimple<'t, S>;
+pub type UnitType<'t, S> = dims_core::unit_creation::UnitSimple<S>;
 #[cfg(feature = "str")]
 pub type UnitType<'t, S> = dims_core::unit_creation::UnitFormat<'t, S>;

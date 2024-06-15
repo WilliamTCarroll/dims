@@ -11,7 +11,6 @@ macro_rules! one_unit {
     ) => {
         pub const $name: dims_core::unit_creation::UnitFormat<$system> =
             dims_core::unit_creation::UnitFormat::<$system> {
-                system: dims_core::unit_creation::PhantomData,
                 ratio: $ratio,
                 offset: $offset,
                 abbr: $abbr,
@@ -51,7 +50,6 @@ macro_rules! one_unit {
         $crate::paste::item! {
             pub const [<$prefix:upper $unit_pre:upper $base:upper>]: dims_core::unit_creation::UnitFormat<$system> =
             dims_core::unit_creation::UnitFormat::<$system> {
-                system: dims_core::unit_creation::PhantomData,
                 ratio: repeat_item!($ratio, $repeat),
                 offset: 0.0,
                 abbr: concat!($abbr1, $abbr2),

@@ -2,10 +2,8 @@
 //! See also `volume` and `volume_dry`
 
 pub use super::volume::VolumeUnit;
-use dims_core::unit_creation::*;
 
 pub const PINT_WET: VolumeUnit = VolumeUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: GALLON_WET.ratio / 8.0,
     #[cfg(feature = "str")]
@@ -17,7 +15,6 @@ pub const PINT_WET: VolumeUnit = VolumeUnit {
 };
 
 pub const QUART_WET: VolumeUnit = VolumeUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: GALLON_WET.ratio / 4.0,
     #[cfg(feature = "str")]
@@ -29,7 +26,6 @@ pub const QUART_WET: VolumeUnit = VolumeUnit {
 };
 
 pub const POTTLE: VolumeUnit = VolumeUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: GALLON_WET.ratio / 2.0,
     #[cfg(feature = "str")]
@@ -41,7 +37,6 @@ pub const POTTLE: VolumeUnit = VolumeUnit {
 };
 
 pub const GALLON_WET: VolumeUnit = VolumeUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: 0.003785411784,
     #[cfg(feature = "str")]
@@ -53,7 +48,6 @@ pub const GALLON_WET: VolumeUnit = VolumeUnit {
 };
 
 pub const BARREL_WET: VolumeUnit = VolumeUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: GALLON_WET.ratio * 31.5,
     #[cfg(feature = "str")]
@@ -65,7 +59,6 @@ pub const BARREL_WET: VolumeUnit = VolumeUnit {
 };
 
 pub const BARREL_OIL: VolumeUnit = VolumeUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: GALLON_WET.ratio * 42.0,
     #[cfg(feature = "str")]
@@ -77,7 +70,6 @@ pub const BARREL_OIL: VolumeUnit = VolumeUnit {
 };
 
 pub const HOGSHEAD: VolumeUnit = VolumeUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: GALLON_WET.ratio * 63.0,
     #[cfg(feature = "str")]

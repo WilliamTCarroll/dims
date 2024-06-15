@@ -13,7 +13,6 @@ This is still a Work-In-Progress. Expect rough-edges, but I am working to smooth
 These particular systems are already set up already in `dims`, but you can set up your own systems:
 
 ```rust
-use dims_core::unit_creation::*;
 #[macro_use]
 use dims_macro;
 
@@ -38,24 +37,20 @@ measure_system!(name: TemperatureSystem, debug_unit: FAHRENHEIT,data_type: f32);
 
 pub const FAHRENHEIT: UnitSimple<TemperatureSystem> = UnitSimple {
     /// The system is used for compiler warnings, but has no memory impact in production code
-    system: PhantomData,
     // Offset is used to change the zero point.  Most of the time, this is zero
     offset: 459.67,
     // Ratio is multiplied to get to the base unit
     ratio: 5.0 / 9.0,
 };
 pub const CELCIUS: UnitSimple<TemperatureSystem> = UnitSimple {
-    system: PhantomData,
     offset: 273.15,
     ratio: 1.0,
 };
 pub const FOOT: UnitSimple<LengthSystem> = UnitSimple {
-    system: PhantomData,
     offset: 0.0,
     ratio: 0.3048,
 };
 pub const SQUARE_FOOT: UnitSimple<AreaSystem> = UnitSimple {
-    system: PhantomData,
     offset: 0.0,
     ratio: 0.09290304,
 };

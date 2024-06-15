@@ -1,9 +1,7 @@
 //! Units generally only used in the nautical context.
 pub use super::length::LengthUnit;
-use dims_core::unit_creation::*;
 
 pub const FATHOM: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: 1143.0 / 625.0,
     #[cfg(feature = "str")]
@@ -15,7 +13,6 @@ pub const FATHOM: LengthUnit = LengthUnit {
 };
 
 pub const CABLE: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: FATHOM.ratio * 120.0,
     #[cfg(feature = "str")]
@@ -27,7 +24,6 @@ pub const CABLE: LengthUnit = LengthUnit {
 };
 
 pub const MILE_NAUTICAL: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: 1852.0,
     #[cfg(feature = "str")]
@@ -41,6 +37,7 @@ pub const MILE_NAUTICAL: LengthUnit = LengthUnit {
 #[cfg(test)]
 mod test {
     use super::*;
+    use dims_core::unit_creation::*;
     #[test]
     fn test_length_nautical() {
         assert_eq!(FATHOM.from(1.0).as_base(), 1.8288);

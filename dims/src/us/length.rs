@@ -3,12 +3,10 @@
 //! See also: `length_survey` and `length_nautical`
 
 use crate::systems::LengthSystem;
-use dims_core::unit_creation::*;
 
 pub type LengthUnit<'t> = super::UnitType<'t, LengthSystem>;
 
 pub const POINT: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: 127.0 / 360_000.0,
     #[cfg(feature = "str")]
@@ -20,7 +18,6 @@ pub const POINT: LengthUnit = LengthUnit {
 };
 
 pub const PICA: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: 127.0 / 30_000.0,
     #[cfg(feature = "str")]
@@ -32,7 +29,6 @@ pub const PICA: LengthUnit = LengthUnit {
 };
 
 pub const INCH: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: 0.0254,
     #[cfg(feature = "str")]
@@ -44,7 +40,6 @@ pub const INCH: LengthUnit = LengthUnit {
 };
 
 pub const FOOT: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: 0.3048,
     #[cfg(feature = "str")]
@@ -56,7 +51,6 @@ pub const FOOT: LengthUnit = LengthUnit {
 };
 
 pub const YARD: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: 0.9144,
     #[cfg(feature = "str")]
@@ -68,7 +62,6 @@ pub const YARD: LengthUnit = LengthUnit {
 };
 
 pub const MILE: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: 1609.344,
     #[cfg(feature = "str")]
@@ -82,6 +75,7 @@ pub const MILE: LengthUnit = LengthUnit {
 #[cfg(test)]
 mod test {
     use super::*;
+    use dims_core::unit_creation::*;
     #[test]
     fn test_length() {
         assert_eq!(INCH.from(1.0).as_base(), 0.0254);

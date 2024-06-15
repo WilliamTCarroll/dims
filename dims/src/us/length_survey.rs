@@ -1,10 +1,8 @@
 //! Length units still in common use in the US for surveying.
 //! Some of these will vary slightly from "general" units (EX: 1.0 FOOT != 1.0 FOOT_SURVEY)
 pub use super::length::LengthUnit;
-use dims_core::unit_creation::*;
 
 pub const LINK: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: 792.0 / 3937.0,
     #[cfg(feature = "str")]
@@ -16,7 +14,6 @@ pub const LINK: LengthUnit = LengthUnit {
 };
 
 pub const FOOT_SURVEY: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: 1200.0 / 3937.0,
     #[cfg(feature = "str")]
@@ -28,7 +25,6 @@ pub const FOOT_SURVEY: LengthUnit = LengthUnit {
 };
 
 pub const ROD: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: LINK.ratio * 25.0,
     #[cfg(feature = "str")]
@@ -40,7 +36,6 @@ pub const ROD: LengthUnit = LengthUnit {
 };
 
 pub const CHAIN: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: ROD.ratio * 4.0,
     #[cfg(feature = "str")]
@@ -52,7 +47,6 @@ pub const CHAIN: LengthUnit = LengthUnit {
 };
 
 pub const FURLONG: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: CHAIN.ratio * 10.0,
     #[cfg(feature = "str")]
@@ -64,7 +58,6 @@ pub const FURLONG: LengthUnit = LengthUnit {
 };
 
 pub const MILE_SURVEY: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: FURLONG.ratio * 8.0,
     #[cfg(feature = "str")]
@@ -76,7 +69,6 @@ pub const MILE_SURVEY: LengthUnit = LengthUnit {
 };
 
 pub const LEAGUE: LengthUnit = LengthUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: MILE_SURVEY.ratio * 3.0,
     #[cfg(feature = "str")]
@@ -90,6 +82,7 @@ pub const LEAGUE: LengthUnit = LengthUnit {
 #[cfg(test)]
 mod test {
     use super::*;
+    use dims_core::unit_creation::*;
     #[test]
     fn test_length_survey() {
         assert_eq!(LINK.from(1.0).as_base(), 0.2011684);

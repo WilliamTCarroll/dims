@@ -1,6 +1,5 @@
 use super::*;
 use core::fmt;
-use core::marker::PhantomData;
 /// A Simple Unit in a given MeasureSystem with the info stored for formatting
 ///
 /// The equations for Unit are as follows:
@@ -16,7 +15,6 @@ use core::marker::PhantomData;
 ///
 /// If greater flexibility is required, please see `UnitTrait`
 pub struct UnitFormat<'t, S: MS> {
-    pub system: PhantomData<S>,
     pub ratio: S::N,
     pub offset: S::N,
     pub abbr: &'t str,

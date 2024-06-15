@@ -3,10 +3,8 @@
 
 pub use super::volume::VolumeUnit;
 use super::volume::CUBIC_INCH;
-use dims_core::unit_creation::*;
 
 pub const PINT_DRY: VolumeUnit = VolumeUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: 0.5506104713575,
     #[cfg(feature = "str")]
@@ -18,7 +16,6 @@ pub const PINT_DRY: VolumeUnit = VolumeUnit {
 };
 
 pub const QUART_DRY: VolumeUnit = VolumeUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: PINT_DRY.ratio * 2.0,
     #[cfg(feature = "str")]
@@ -30,7 +27,6 @@ pub const QUART_DRY: VolumeUnit = VolumeUnit {
 };
 
 pub const GALLON_DRY: VolumeUnit = VolumeUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: QUART_DRY.ratio * 4.0,
     #[cfg(feature = "str")]
@@ -42,7 +38,6 @@ pub const GALLON_DRY: VolumeUnit = VolumeUnit {
 };
 
 pub const PECK: VolumeUnit = VolumeUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: GALLON_DRY.ratio * 2.0,
     #[cfg(feature = "str")]
@@ -54,7 +49,6 @@ pub const PECK: VolumeUnit = VolumeUnit {
 };
 
 pub const BUSHEL: VolumeUnit = VolumeUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: PECK.ratio * 4.0,
     #[cfg(feature = "str")]
@@ -66,7 +60,6 @@ pub const BUSHEL: VolumeUnit = VolumeUnit {
 };
 
 pub const BARREL_DRY: VolumeUnit = VolumeUnit {
-    system: PhantomData,
     offset: 0.0,
     ratio: CUBIC_INCH.ratio * 7056.0,
     #[cfg(feature = "str")]

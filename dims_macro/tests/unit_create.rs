@@ -1,6 +1,5 @@
 #[macro_use]
 extern crate dims_macro;
-use core::marker::PhantomData;
 use dims_core::prelude::UnitFormat;
 use dims_core::unit_creation::*;
 use rand;
@@ -30,7 +29,6 @@ impl DivideBy<Length> for Area {
 si_unit! {system: Length,base: "metre", plural: "metres", abbr: "m"}
 
 // const INCH: UnitFormat<Length> = UnitFormat::<Length> {
-//     system: PhantomData,
 //     offset: 0.0,
 //     ratio: 0.0254,
 //     abbr: "in",
@@ -47,7 +45,6 @@ one_unit! {
 }
 
 const SQINCH: UnitFormat<Area> = UnitFormat {
-    system: PhantomData,
     offset: 0.0,
     ratio: 0.09290304 / 144.0,
     abbr: "in²",
