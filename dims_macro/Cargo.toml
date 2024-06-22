@@ -1,6 +1,6 @@
 [package]
 name = "dims_macro"
-version = "0.5.1"
+version = "0.5.2"
 authors = ["William Carroll"]
 edition = "2021"
 license = "MIT"

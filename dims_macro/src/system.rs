@@ -20,7 +20,6 @@ macro_rules! measure_system {
         pub struct $name;
         impl $crate::dims_core::unit_creation::MeasureSystem for $name {
             type N = $data_type;
-            #[cfg(feature = "str")]
             const DEBUG_UNIT: $crate::dims_core::unit_creation::UnitFormat<'static, Self> = $debug;
         }
     };
