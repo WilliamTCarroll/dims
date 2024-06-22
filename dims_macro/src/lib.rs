@@ -9,6 +9,8 @@ mod no_str;
 mod si_macro;
 mod system;
 
+pub use dims_core;
+
 #[macro_export]
 /// Repeat the item presented x number of times. \
 /// This is for internal use for generating si units. \
